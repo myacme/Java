@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- 将Java实体类Student与数据库Hibernate表Student映射 -->
+    <class name="person" table="person">
+        <!-- 主键 -->
+        <id name="id" column="id" type="java.lang.Integer">
+            <!-- generator标签表示主键生成策略
+            两种主键生成策略分别为native（自动增长）和assigned（手工赋值）： -->
+            <generator class="native"/>
+        </id>
+        <!-- 非主键属性使用property -->
+        <property name="name" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>
