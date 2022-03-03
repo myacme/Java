@@ -1,7 +1,7 @@
-/**
+package java; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: Hanoi
+ * FileName: java.Hanoi
  * <p>
  * Author:   MyAcme
  * <p>

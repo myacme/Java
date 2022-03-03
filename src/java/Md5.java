@@ -1,7 +1,7 @@
-/**
+package java; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: Md5
+ * FileName: java.Md5
  * <p>
  * Author:   MyAcme
  * <p>

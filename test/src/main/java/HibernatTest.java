@@ -22,7 +22,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.mapping.MetadataSource;
 import org.hibernate.service.ServiceRegistry;
 
 /**

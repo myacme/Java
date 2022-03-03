@@ -1,5 +1,5 @@
-/**
- * FileName: MidSreach
+package java; /**
+ * FileName: java.MidSreach
  * <p>
  * Author:   liujixiang
  * <p>

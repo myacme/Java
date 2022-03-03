@@ -1,7 +1,7 @@
-/**
+package java; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: ExceptionTest
+ * FileName: java.ExceptionTest
  * <p>
  * Author:   liujixiang
  * <p>

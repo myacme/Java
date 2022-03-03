@@ -1,5 +1,5 @@
-/**
- * FileName: IdeaCode
+package java; /**
+ * FileName: java.IdeaCode
  * <p>
  * Author:   liujixiang
  * <p>

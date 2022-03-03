@@ -1,5 +1,5 @@
-/**
- * FileName: MapTest
+package java; /**
+ * FileName: java.MapTest
  * <p>
  * Author:   liujixiang
  * <p>

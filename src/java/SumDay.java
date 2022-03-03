@@ -1,5 +1,5 @@
-/**
- * FileName: SumDay
+package java; /**
+ * FileName: java.SumDay
  * <p>
  * Author:   liujixiang
  * <p>

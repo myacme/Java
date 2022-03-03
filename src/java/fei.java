@@ -1,7 +1,7 @@
-/**
+package java; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: fei
+ * FileName: java.fei
  * <p>
  * Author:   MyAcme
  * <p>
@@ -16,10 +16,6 @@
  * 作者姓名           修改时间           版本号              描述
  */
 
-
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -48,7 +44,6 @@ public class fei {
 //            System.out.println(c);
 //
 //        }
-	    ConcurrentHashMap
         System.out.println(b);
         System.out.println(anInt);
         String str = "abc";

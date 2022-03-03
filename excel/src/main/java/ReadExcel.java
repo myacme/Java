@@ -33,9 +33,7 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import sun.security.provider.MD5;
 
-import java.io.*;
 import java.security.MessageDigest;
 
 public class ReadExcel {
