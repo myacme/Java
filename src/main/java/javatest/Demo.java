@@ -7,7 +7,7 @@ import java.util.TreeMap;
 public class Demo {
 
     public static void main(String[] args) {
-        Map<Integer,String > student = new TreeMap<>((o1,o2)-> o2 - o1);
+        Map<Integer,String > student = new TreeMap<>((o1,o2)-> o1 - o2);
         student.put(1, "1");
         student.put(3, "3");
         student.put(4, "4");

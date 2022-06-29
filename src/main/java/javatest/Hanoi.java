@@ -42,7 +42,7 @@ public class Hanoi {
     }
     public static void main(String[] args) {
         long startTime=System.currentTimeMillis();
-        hanoi(100, "A", "B", "C");
+        hanoi(5, "A", "B", "C");
         long endTime=System.currentTimeMillis();
         float excTime=(float)(endTime-startTime);
         System.out.println("执行时间：" + excTime + "ms");
