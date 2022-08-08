@@ -3,7 +3,6 @@ package com.example.boot;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
@@ -14,7 +13,7 @@ import javax.annotation.Resource;
  * @version 1.0.0
  * @create 2021/11/26 10:35
  */
-@Configuration
+//@Configuration
 public class FliterConfig {
 
 	@Resource
