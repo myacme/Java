@@ -23,26 +23,31 @@ import java.util.regex.Pattern;
  * 〈〉
  *
  * @author ljx
-
  * @create 2021/3/11
-
  * @since 1.0.0
-
  */
 
 public class Zz {
-	public static void main(String[] args) {
-//		String a="共940条记录 1/94页";
-		String a="共找到 483 个小区";
-		String regEx="共找到 (\\d+) 个小区";
-		String regEx1="/(\\d+)页";
+	public static void a() {
+		//		String a="共940条记录 1/94页";
+		String a = "共找到 483 个小区";
+		String regEx = "共找到 (\\d+) 个小区";
+		String regEx1 = "/(\\d+)页";
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(a);
-		if (m.find()){
-			System.out.println( m.group(1));
+		if (m.find()) {
+			System.out.println(m.group(1));
 		}
-
 	}
 
+	public static void b() {
+		String a = ".zip";
+		String regEx = "^(?!\\.).*$";
+		boolean p = Pattern.matches(regEx, a);
+		System.out.println(p);
+	}
 
+	public static void main(String[] args) {
+		b();
+	}
 }
