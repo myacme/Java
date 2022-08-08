@@ -42,8 +42,11 @@ public class Zz {
 
 	public static void b() {
 		String a = ".zip";
-		String regEx = "^(?!\\.).*$";
-		boolean p = Pattern.matches(regEx, a);
+		String regEx = "^(?!\\.).*$"; //不以.开头
+		String regEx1 = "^\\..*$"; //以.开头
+		String regEx2 = "^.*(a).*$"; //包含a
+		String regEx3 = "^((?!a).)*$"; //不包含
+		boolean p = Pattern.matches(regEx1, a);
 		System.out.println(p);
 	}
 
