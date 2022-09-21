@@ -21,6 +21,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+        <!--引入本地lib下的jar包-->
 <!--        <dependency>-->
 <!--            <groupId>gdal</groupId>-->
 <!--            <artifactId>gdal</artifactId>-->
