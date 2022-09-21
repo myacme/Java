@@ -21,6 +21,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+<!--        <dependency>-->
+<!--            <groupId>gdal</groupId>-->
+<!--            <artifactId>gdal</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/src/main/resources/lib/gdal.jar</systemPath>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -34,6 +41,14 @@
                 </configuration>
             </plugin>
         </plugins>
+<!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>${project.basedir}</directory>-->
+        <!--                <includes>-->
+        <!--                    <include>**/*</include>-->
+        <!--                </includes>-->
+        <!--            </resource>-->
+        <!--        </resources>-->
     </build>
 
 
