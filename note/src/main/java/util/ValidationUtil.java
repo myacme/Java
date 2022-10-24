@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 
 public class ValidationUtil {
 
+	/**
+	 * 手机号码验证
+	 * @param str
+	 * @return
+	 */
 	public static boolean isMobile(String str) {
 		Pattern p = null;
 		Matcher m = null;
