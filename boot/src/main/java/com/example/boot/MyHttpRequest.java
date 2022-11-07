@@ -1,5 +1,6 @@
 package com.example.boot;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,20 @@ public class MyHttpRequest extends HttpServletRequestWrapper {
 	public ServletInputStream getInputStream() {
 		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
 		return new ServletInputStream() {
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+			}
+
 			@Override
 			public int read() {
 				return bais.read();

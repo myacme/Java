@@ -1,13 +1,11 @@
 package com.example.boot.Interceptor;
 
 
+import com.example.boot.util.IpUtil;
+import com.example.boot.util.JacksonUtil;
+import com.example.boot.util.JwtTokenUtil;
+import com.example.boot.util.LogonUserUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import lab.captain.pwy.bean.Result;
-import lab.captain.pwy.bean.ResultStatus;
-import lab.captain.pwy.util.IpUtil;
-import lab.captain.pwy.util.JacksonUtil;
-import lab.captain.pwy.util.JwtTokenUtil;
-import lab.captain.pwy.util.LogonUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 
 /**
@@ -39,27 +36,27 @@ public class TokenInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		if (token == null) {
-			response.getWriter().println(JacksonUtil.getJsonString(Result.error(ResultStatus.NO_AUTH)));
+			response.getWriter().println(JacksonUtil.getJsonString(""));
 			log.info("token不能为空");
 			return false;
 		}
 		try {
 			if (!JwtTokenUtil.validateToken(token)) {
-				response.getWriter().println(JacksonUtil.getJsonString(Result.error(ResultStatus.NO_AUTH)));
+				response.getWriter().println(JacksonUtil.getJsonString(""));
 				log.info("token解析错误");
 				return false;
 			}
 			if (LogonUserUtil.verifyLogonUser(IpUtil.getIpAddr(request), JwtTokenUtil.getSubject(token))) {
-				response.getWriter().println(JacksonUtil.getJsonString(Result.error("401", "未登录，请先登录", new Date(), null)));
+				response.getWriter().println(JacksonUtil.getJsonString("未登录，请先登录"));
 				log.info("未登录，请先登录");
 				return false;
 			}
 		} catch (ExpiredJwtException ex) {
-			response.getWriter().println(JacksonUtil.getJsonString(Result.error("401", "登录信息已过期，请从新登录", new Date(), null)));
+			response.getWriter().println(JacksonUtil.getJsonString("登录信息已过期，请从新登录"));
 			log.info("token过期需要重新登录");
 			return false;
 		} catch (Exception e) {
-			response.getWriter().println(JacksonUtil.getJsonString(Result.error(ResultStatus.NO_AUTH)));
+			response.getWriter().println(JacksonUtil.getJsonString(""));
 			log.info("token解析错误:{}", e.getMessage());
 			return false;
 		}

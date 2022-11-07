@@ -1,7 +1,7 @@
 package com.example.boot.util;
 
 
-import lab.captain.pwy.entity.LoginUser;
+import com.example.boot.bean.LoginUser;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,7 +21,7 @@ public class LogonUserUtil {
 		if (requestAttributes != null) {
 			HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
 			String token = request.getHeader("token");
-			return lab.captain.pwy.util.JwtTokenUtil.getSubject(token);
+			return JwtTokenUtil.getSubject(token);
 		}
 		return null;
 	}

@@ -1,7 +1,7 @@
 package com.example.boot.config;
 
 
-import lab.captain.pwy.Interceptor.TokenInterceptor;
+import com.example.boot.Interceptor.TokenInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;

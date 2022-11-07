@@ -1,7 +1,8 @@
 package com.example.boot.util;
 
 
-import lab.captain.pwy.bean.SftpConfig;
+import com.example.boot.bean.SftpConfig;
+import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -93,7 +94,7 @@ public class SftpUtil {
 		// 登录服务器
 		connect();
 		try {
-			if (!lab.captain.pwy.util.StringUtils.isEmpty(path)) {
+			if (!StringUtils.isEmpty(path)) {
 				path = sftpConfig.getPath() + "/" + path;
 				if (batchRemoveFile(path)) {
 					try {
@@ -112,7 +113,7 @@ public class SftpUtil {
 				}
 				for (MultipartFile file : files) {
 					try (InputStream inputStream = new ByteArrayInputStream(file.getBytes())) {
-						channelSftp.put(inputStream, lab.captain.pwy.util.StringUtils.isEmpty(fileName) ? file.getOriginalFilename() : fileName);
+						channelSftp.put(inputStream, StringUtils.isEmpty(fileName) ? file.getOriginalFilename() : fileName);
 					} catch (Exception e) {
 						logger.info("SFTP批量上传异常!");
 						throw new RuntimeException("SFTP批量上传异常:", e);
@@ -144,7 +145,7 @@ public class SftpUtil {
 		// 登录服务器
 		connect();
 		try {
-			if (!lab.captain.pwy.util.StringUtils.isEmpty(path)) {
+			if (!StringUtils.isEmpty(path)) {
 				path = sftpConfig.getPath() + "/" + path;
 				try {
 					channelSftp.cd(path);
@@ -159,7 +160,7 @@ public class SftpUtil {
 					}
 				}
 				logger.info("SFTP上传路径：{}", path);
-				try (InputStream inputStream = lab.captain.pwy.util.ZipUtil.zip(files, fileName)) {
+				try (InputStream inputStream = ZipUtil.zip(files, fileName)) {
 					channelSftp.put(inputStream, fileName);
 				} catch (Exception e) {
 					logger.info("SFTP批量上传异常!");
@@ -187,7 +188,7 @@ public class SftpUtil {
 		connect();
 		List<OutputStream> list = new ArrayList<>();
 		try {
-			if (!lab.captain.pwy.util.StringUtils.isEmpty(path)) {
+			if (!StringUtils.isEmpty(path)) {
 				path = sftpConfig.getPath() + "/" + path;
 				if (verifyDirectoryExists(path)) {
 					Vector<ChannelSftp.LsEntry> files = channelSftp.ls(path);
@@ -223,7 +224,7 @@ public class SftpUtil {
 		connect();
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
-			if (!lab.captain.pwy.util.StringUtils.isEmpty(path)) {
+			if (!StringUtils.isEmpty(path)) {
 				path = sftpConfig.getPath() + "/" + path;
 				if (verifyDirectoryExists(path)) {
 					channelSftp.cd(path);
