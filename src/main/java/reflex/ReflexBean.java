@@ -10,7 +10,7 @@ package reflex;
  */
 
 public class ReflexBean {
-	@Value(value = "1",tag = "2")
+	@Value(value = "注解",tag = "2")
 	private String string;
 
 	private int anInt ;

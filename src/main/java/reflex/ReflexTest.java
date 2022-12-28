@@ -26,12 +26,12 @@ public class ReflexTest {
 		Class aClass2 = Class.forName("reflex.ReflexBean");
 		System.out.println("类名：" + aClass.getName());
 		Constructor[] constructors = aClass.getConstructors();
-		System.out.println("所有公有的构造器：");
+		System.out.print("所有公有的构造器：");
 		for (Constructor constructor : constructors) {
 			System.out.println(constructor);
 		}
 		Constructor[] declaredConstructors = aClass.getDeclaredConstructors();
-		System.out.println("所有的构造器：");
+		System.out.print("所有的构造器：");
 		for (Constructor declaredConstructor : declaredConstructors) {
 			System.out.println(declaredConstructor);
 		}
@@ -39,24 +39,24 @@ public class ReflexTest {
 		Object instance = constructor.newInstance("反射");
 		System.out.println(instance.toString());
 		Field[] fields = aClass.getFields();
-		System.out.println("所有公有属性");
+		System.out.print("所有公有属性：");
 		for (Field field : fields) {
 			System.out.println(field);
 		}
 		Field[] declaredFields = aClass.getDeclaredFields();
-		System.out.println("所有属性");
+		System.out.print("所有属性：");
 		for (Field declaredField : declaredFields) {
 			System.out.println(declaredField);
 		}
 		Field anInt = aClass.getDeclaredField("anInt");
 		anInt.setAccessible(true);
-		System.out.println("通过反射设置属性值：");
+		System.out.print("通过反射设置属性值：");
 		anInt.set(instance,111111);
 		System.out.println(anInt.get(instance));
 		Method getAnInt = aClass.getDeclaredMethod("getAnInt");
 		getAnInt.setAccessible(true);
 		Object invoke = getAnInt.invoke(instance);
-		System.out.println("通过反射调用方法：");
+		System.out.print("通过反射调用方法：");
 		System.out.println(invoke.toString());
 
 		//绕过泛型检查
@@ -67,17 +67,17 @@ public class ReflexTest {
 		add.invoke(list, 111);
 		System.out.println(Arrays.toString(list.toArray()));
 		Field string = aClass.getDeclaredField("string");
-		System.out.println("获取所有注解：");
+		System.out.print("获取所有注解：");
 		Annotation[] annotations = string.getAnnotations();
 		for (Annotation annotation : annotations) {
 			System.out.println(annotation);
 		}
 		Value annotation = string.getAnnotation(Value.class);
-		System.out.println("获取注解值：");
+		System.out.print("获取注解值：");
 		System.out.println(annotation.value());
 		string.setAccessible(true);
 		string.set(reflexBean, annotation.value());
-		System.out.println("设置注解到属性上：");
+		System.out.print("设置注解到属性上：");
 		System.out.println(reflexBean.toString());
 
 	}
