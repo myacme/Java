@@ -4,13 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.util.Units;
+import org.apache.poi.xssf.usermodel.*;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTRow;
 
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -167,10 +168,9 @@ public class LuckySheetExcleUtil {
 	 * 开发：zzq
 	 *
 	 * @param excelData 数据
-	 * @param response  用来获取输出流
 	 * @throws IOException
 	 */
-	public static XSSFWorkbook exportLuckySheetXlsx(String excelData, HttpServletResponse response) throws Exception {
+	public static XSSFWorkbook exportLuckySheetXlsx(String excelData) throws Exception {
 		//解析对象，可以参照官方文档:https://mengshukeji.github.io/LuckysheetDocs/zh/guide/#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84
 		JSONArray jsonArray = (JSONArray) JSONObject.parse(excelData);
 		//如果只有一个sheet那就是get(0),有多个那就对应取下标
