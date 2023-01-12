@@ -50,7 +50,19 @@ public class Zz {
 		System.out.println(p);
 	}
 
+	public static void c() {
+		String a = "共找到 [请问] 个小[区.]12211[qq::：][配电站(开关站).断路器.本期建设1kV出线]";
+		String regEx = "(\\[[^\\[|^\\]|^{|^}]*\\])";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(a);
+		int i = 0;
+		while (m.find(i)) {
+			System.out.println(m.group(1));
+			i = m.end();
+		}
+	}
+
 	public static void main(String[] args) {
-		b();
+		c();
 	}
 }
