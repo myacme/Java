@@ -61,15 +61,17 @@ public class ZipUtil {
 	 */
 	public static List<OutputStream> unzip(InputStream inputStream) throws Exception {
 		List<OutputStream> list = new ArrayList<>();
-		try (ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-		     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();) {
-			ZipEntry nextEntry = zipInputStream.getNextEntry();
-			byte[] bytes = new byte[1024];
-			int length;
-			while ((length = zipInputStream.read(bytes)) > 0) {
-				byteArrayOutputStream.write(bytes, 0, length);
+		try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+			ZipEntry nextEntry = null;
+			while ((nextEntry = zipInputStream.getNextEntry()) != null) {
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				byte[] bytes = new byte[1024];
+				int length;
+				while ((length = zipInputStream.read(bytes)) > 0) {
+					byteArrayOutputStream.write(bytes, 0, length);
+				}
+				list.add(byteArrayOutputStream);
 			}
-			list.add(byteArrayOutputStream);
 			return list;
 		} catch (IOException e) {
 			throw new IOException();

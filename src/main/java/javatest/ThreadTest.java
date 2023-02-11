@@ -30,9 +30,12 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 
 public class ThreadTest {
-	private int data;
 	static int anInt = 0;
 	int result = 0;
+	private int data;
+
+	static void ab() {
+	}
 
 	public void m() {
 		anInt = 1;
@@ -40,20 +43,16 @@ public class ThreadTest {
 		data += 2;
 		System.out.println(result + " " + data);
 	}
-
-	static void ab() {
-	}
 }
 
 class ThreadOfRun implements Runnable {
 	private final String name;
+	private int anInt;
 
 	public ThreadOfRun(String name, int anInt) {
 		this.name = name;
 		this.anInt = anInt;
 	}
-
-	private int anInt;
 
 	@Override
 	public void run() {
@@ -66,13 +65,20 @@ class ThreadOfRun implements Runnable {
 
 class ThreadExample extends Thread {
 	private String name;
+	private int anInt;
 
 	public ThreadExample(String name, int anInt) {
 		this.name = name;
 		this.anInt = anInt;
 	}
 
-	private int anInt;
+	public static void main(String[] args) {
+		ThreadOfRun t = new ThreadOfRun("线程", 0);
+		Thread t1 = new Thread(t, "线程一");
+		Thread t2 = new Thread(t, "线程二");
+		t1.start();
+		t2.start();
+	}
 
 	@Override
 	public void run() {
@@ -83,14 +89,6 @@ class ThreadExample extends Thread {
 			} catch (Exception e) {
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		ThreadOfRun t = new ThreadOfRun("线程", 0);
-		Thread t1 = new Thread(t, "线程一");
-		Thread t2 = new Thread(t, "线程二");
-		t1.start();
-		t2.start();
 	}
 }
 
@@ -114,18 +112,26 @@ class Singleton {
 }
 
 
-
 class ThreadDemo extends Thread {
-	ThreadDemo demo ;
+	static int anInt = 0;
+	ThreadDemo demo;
+	Lock l = new ReentrantLock();
 	private String name;
-	public ThreadDemo(String name){
+
+	public ThreadDemo(String name) {
 		this.name = name;
 	}
-	public ThreadDemo(ThreadDemo name){
+
+	public ThreadDemo(ThreadDemo name) {
 		this.demo = name;
 	}
-	static int anInt = 0;
-	Lock l = new ReentrantLock();
+
+	public static void main(String[] args) {
+		ThreadDemo threadDemo = new ThreadDemo(new ThreadDemo("a"));
+		ThreadDemo threadDemo1 = new ThreadDemo(new ThreadDemo("b"));
+		threadDemo.start();
+		threadDemo1.start();
+	}
 
 	public synchronized void count(String s) {
 		synchronized (ThreadDemo.class) {
@@ -144,7 +150,6 @@ class ThreadDemo extends Thread {
 	public synchronized void count2(String s) {
 		l.lock();
 		try {
-
 			for (int i = 0; i < 10; i++) {
 				System.out.println(s + ":" + ++anInt);
 			}
@@ -158,7 +163,6 @@ class ThreadDemo extends Thread {
 	public synchronized void count3(String s) {
 		l.lock();
 		try {
-
 			for (int i = 0; i < 10; i++) {
 				System.out.println(s + ":" + ++anInt);
 			}
@@ -169,10 +173,9 @@ class ThreadDemo extends Thread {
 		}
 	}
 
-
 	@Override
-	public void  run(){
-		synchronized(ThreadDemo.class){
+	public void run() {
+		synchronized (ThreadDemo.class) {
 			System.out.println(demo.name);
 			try {
 				Thread.sleep(1000000);
@@ -181,14 +184,49 @@ class ThreadDemo extends Thread {
 			}
 		}
 	}
+}
 
+class ThreadVariable extends Thread {
 
-	public static void main(String[] args){
-		ThreadDemo threadDemo = new ThreadDemo(new ThreadDemo("a"));
-		ThreadDemo threadDemo1 = new ThreadDemo(new ThreadDemo("b"));
-		threadDemo.start();
-		threadDemo1.start();
+	public  String string;
 
+	public static void main(String[] args) {
+		ThreadVariable threadVariable = new ThreadVariable();
+		threadVariable.setString("111222333");
+		threadVariable.modifyStringRun();
+		System.out.println(threadVariable.getString());
+	}
+
+	public String getString() {
+		return string;
+	}
+
+	public void setString(String string) {
+		this.string = string;
+	}
+
+	@Override
+	public void run() {
+		synchronized (ThreadVariable.class) {
+//			modifyString();
+		}
+	}
+
+	public void modifyStringRun() {
+		for (int i = 1; i < 4; i++) {
+			int finalI = i;
+			new Thread(() -> {
+				modifyString(String.valueOf(finalI), String.valueOf(finalI + 5));
+			}).start();
+		}
+	}
+
+	public void modifyString(String oldStr, String newStr) {
+		synchronized (this) {
+			System.out.println(Thread.currentThread().getName() + ": " + string);
+			string = string.replace(oldStr, newStr);
+			System.out.println(Thread.currentThread().getName() + "修改后: " + string);
+		}
 	}
 }
 
