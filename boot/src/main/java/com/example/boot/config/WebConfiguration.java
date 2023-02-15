@@ -4,7 +4,6 @@ package com.example.boot.config;
 import com.example.boot.Interceptor.TokenInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -22,7 +21,7 @@ import java.util.concurrent.Executors;
  * @create 2022/7/21 10:41
  */
 
-@Configuration
+//@Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
 	private static final Logger log = LoggerFactory.getLogger(WebConfiguration.class);

@@ -8,7 +8,6 @@ import com.example.boot.util.LogonUserUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0.0
  * @create 2022/7/21 10:41
  */
-@Component
+//@Component
 public class TokenInterceptor implements HandlerInterceptor {
 	private static final Logger log = LoggerFactory.getLogger(TokenInterceptor.class);
 

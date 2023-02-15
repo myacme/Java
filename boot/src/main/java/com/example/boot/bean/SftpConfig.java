@@ -30,17 +30,6 @@ public class SftpConfig {
 	@Value("${sftp.path}")
 	private String path;
 
-	@Value("${local.path}")
-	private String localPath;
-
-	public String getLocalPath() {
-		return localPath;
-	}
-
-	public void setLocalPath(String localPath) {
-		this.localPath = localPath;
-	}
-
 	public String getHostname() {
 		return hostname;
 	}

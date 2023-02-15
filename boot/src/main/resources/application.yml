@@ -1,1 +1,11 @@
+server:
+  port: 8080
 
+
+sftp:
+  host: 172.31.1.14
+  port: 22
+  hostname: scwdd
+  password: scwdd@123
+  path: /data/scwdd/pwyfile
+  timeout: 30000
