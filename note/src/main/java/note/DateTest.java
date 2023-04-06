@@ -172,7 +172,9 @@ public class DateTest {
 	}
 
 	public static void main(String[] args) {
-		DateTest dt = new DateTest();
-		dt.formateDate();
+		System.out.println(LocalDateTime.now());
+		System.out.println(LocalTime.now());
+		System.out.println(LocalDate.now());
+		System.out.println(new Date());
 	}
 }

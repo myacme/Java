@@ -65,10 +65,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String getString(Object str) {
-		String a = "null";
 		if (StringUtils.isEmpty(str)) {
-			return "";
-		} else if (a.equals(String.valueOf(str))) {
 			return "";
 		} else {
 			return str.toString();
