@@ -61,8 +61,19 @@ public class Zz {
 			i = m.end();
 		}
 	}
+	public static void d() {
+		String a = "t-|2-50.jpg";
+		String regEx = "-(^-|[0-9]*).";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(a);
+		int i = 0;
+		while (m.find(i)) {
+			System.out.println(m.group(1));
+			i = m.end();
+		}
+	}
 
 	public static void main(String[] args) {
-		c();
+		d();
 	}
 }
