@@ -1,21 +1,4 @@
-package javatest; /**
- * Copyright (C), 2015-2020, XXX有限公司
- * <p>
- * FileName: string
- * <p>
- * Author:   MyAcme
- * <p>
- * Date:     2020/1/3 9:53
- * <p>
- * Description:
- * <p>
- * History:
- *
- * <author>          <time>          <version>          <desc>
- * <p>
- * 作者姓名           修改时间           版本号              描述
- */
-
+package javatest;
 
 import java.util.*;
 
@@ -64,6 +47,24 @@ import java.util.*;
 
 
     }
+	static class Intern{
+		public static void main(String[] args) {
+			String s = "java";
+			String t = "wolai";
+ 			System.out.println(s.intern());
+			System.out.println(t.intern());
+			System.out.println(s.intern() == s);
+			System.out.println(t.intern() == t);
+
+			String s1 = new StringBuffer("java").toString();
+			System.out.println(s1.intern() == s1);
+			System.out.println(s == s1);
+
+			String t1 = new StringBuffer("wolail").toString();
+			System.out.println(t1.intern() == t1);
+
+		}
+	}
 
 
 }
