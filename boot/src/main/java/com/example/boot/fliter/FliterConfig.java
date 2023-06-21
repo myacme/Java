@@ -1,4 +1,4 @@
-package com.example.boot;
+package com.example.boot.fliter;
 
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
