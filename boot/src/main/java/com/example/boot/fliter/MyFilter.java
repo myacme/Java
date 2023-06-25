@@ -2,8 +2,9 @@ package com.example.boot.fliter;
 
 
 import com.example.boot.Base64Converter;
-import com.example.boot.MyHttpRequest;
+import com.example.boot.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import java.util.Map;
  * @create 2021/11/26 10:31
  */
 //@Component
+//@WebFilter(filterName = "paramFilter",urlPatterns = "/*")
+//@Order(1)
 public class MyFilter implements Filter {
 
 	private static final ObjectMapper JACKSON = new ObjectMapper();
@@ -30,14 +33,20 @@ public class MyFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		MyHttpRequest requestWrapper = new MyHttpRequest(request);
+		ParamHttpRequest requestWrapper = new ParamHttpRequest(request);
 		String body = requestWrapper.getBody();
-		if (body != null) {
+		Map<String, String[]> parameterMap = requestWrapper.getParameterMap();
+		if (!StringUtils.isEmpty(body)) {
 			// 对参数进行处理
-			Map<String, Object> params = JACKSON.readValue(body, Map.class);
-			Map<String, Object> map = Base64Converter.decode(params, Map.class);
+			String decode = Base64Converter.decode(body);
 			// 由于body是设置成不可变的，所以需要重新创建一个request，将body设置进去
-			requestWrapper = new MyHttpRequest(requestWrapper, JACKSON.writeValueAsBytes(map));
+			requestWrapper = new ParamHttpRequest(requestWrapper, JACKSON.writeValueAsBytes(decode));
+		}
+		if (!CollectionUtils.isEmpty(parameterMap)) {
+			// 对参数进行处理
+			Map<String, String[]> decode = Base64Converter.decode(parameterMap);
+			// 由于body是设置成不可变的，所以需要重新创建一个request，将body设置进去
+			requestWrapper = new ParamHttpRequest(requestWrapper, decode);
 		}
 		filterChain.doFilter(requestWrapper, servletResponse);
 	}

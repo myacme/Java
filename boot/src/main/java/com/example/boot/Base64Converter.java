@@ -1,11 +1,13 @@
 package com.example.boot;
 
+import com.example.boot.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author yinm
@@ -62,5 +64,52 @@ public class Base64Converter {
 			e.printStackTrace();
 		}
 		return (T) obj;
+	}
+
+	/**
+	 * 将加密后的字符串进行解密
+	 *
+	 * @param param
+	 * @return
+	 */
+	public static String decode(String param) {
+		if (StringUtils.isEmpty(param)) {
+			return null;
+		}
+		return new String(DECODER.decode(param), StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * 将加密后的字符串进行解密
+	 *
+	 * @param param
+	 * @return
+	 */
+	public static String[] decode(String[] param) {
+		if (param == null) {
+			return null;
+		}
+		String[] param1 = new String[param.length];
+		for (int i = 0; i < param.length; i++) {
+			param1[i] = new String(DECODER.decode(param[i]), StandardCharsets.UTF_8);
+		}
+		return param1;
+	}
+
+	/**
+	 * 将加密后的字符串进行解密
+	 *
+	 * @param param
+	 * @return
+	 */
+	public static Map<String, String[]> decode(Map<String, String[]> param) {
+		if (param == null) {
+			return null;
+		}
+		Set<String> keySet = param.keySet();
+		for (String key : keySet) {
+			param.put(key, decode(param.get(key)));
+		}
+		return param;
 	}
 }

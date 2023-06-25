@@ -1,4 +1,4 @@
-package com.example.boot;
+package com.example.boot.fliter;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -12,7 +12,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyHttpRequest extends HttpServletRequestWrapper {
+public class ParamHttpRequest extends HttpServletRequestWrapper {
 	/**
 	 * 保存流数据
 	 */
@@ -22,79 +22,22 @@ public class MyHttpRequest extends HttpServletRequestWrapper {
 	 */
 	private Map<String, String[]> params = new HashMap<>();
 
-	public MyHttpRequest(HttpServletRequest request) {
+	public ParamHttpRequest(HttpServletRequest request) {
 		super(request);
 		body = getBodyString(request).getBytes(StandardCharsets.UTF_8);
 		this.params.putAll(request.getParameterMap());
 	}
 
-	public MyHttpRequest(HttpServletRequest request, byte[] body) {
+	public ParamHttpRequest(HttpServletRequest request, byte[] body) {
 		super(request);
 		this.body = body;
 		this.params.putAll(request.getParameterMap());
 	}
 
-	@Override
-	public ServletInputStream getInputStream() {
-		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
-		return new ServletInputStream() {
-			@Override
-			public boolean isFinished() {
-				return false;
-			}
-
-			@Override
-			public boolean isReady() {
-				return false;
-			}
-
-			@Override
-			public void setReadListener(ReadListener readListener) {
-			}
-
-			@Override
-			public int read() {
-				return bais.read();
-			}
-		};
-
-	}
-	@Override
-	public BufferedReader getReader() {
-		return new BufferedReader(new InputStreamReader(this.getInputStream()));
-	}
-
-	@Override
-	public String getParameter(String name) {
-		String[] values = params.get(name);
-		if(values == null || values.length == 0) {
-			return null;
-		}
-		return values[0];
-	}
-
-	@Override
-	public Enumeration<String> getParameterNames() {
-		return Collections.enumeration(params.keySet());
-	}
-
-	@Override
-	public String[] getParameterValues(String name) {
-		return params.get(name);
-	}
-
-	@Override
-	public Map<String, String[]> getParameterMap() {
-		return this.params;
-	}
-
-	public void setParameter(Map<String, String> map) {
-		params.clear();
-		map.forEach((key, value) -> params.put(key, new String[]{value}));
-	}
-
-	public String getBody() {
-		return new String(body);
+	public ParamHttpRequest(HttpServletRequest request, Map<String, String[]> params) {
+		super(request);
+		this.body = null;
+		this.params = params;
 	}
 
 	public static String getBodyString(ServletRequest request) {
@@ -127,5 +70,68 @@ public class MyHttpRequest extends HttpServletRequestWrapper {
 			}
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public ServletInputStream getInputStream() {
+		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+		return new ServletInputStream() {
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+			}
+
+			@Override
+			public int read() {
+				return bais.read();
+			}
+		};
+	}
+
+	@Override
+	public BufferedReader getReader() {
+		return new BufferedReader(new InputStreamReader(this.getInputStream()));
+	}
+
+	@Override
+	public String getParameter(String name) {
+		String[] values = params.get(name);
+		if (values == null || values.length == 0) {
+			return null;
+		}
+		return values[0];
+	}
+
+	@Override
+	public Enumeration<String> getParameterNames() {
+		return Collections.enumeration(params.keySet());
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+		return params.get(name);
+	}
+
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return this.params;
+	}
+
+	public void setParameter(Map<String, String> map) {
+		params.clear();
+		map.forEach((key, value) -> params.put(key, new String[]{value}));
+	}
+
+	public String getBody() {
+		return new String(body);
 	}
 }
