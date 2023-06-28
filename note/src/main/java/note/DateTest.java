@@ -147,7 +147,7 @@ public class DateTest {
 		LocalDate today = LocalDate.now();
 		LocalDate java8Release = LocalDate.of(2018, Month.MAY, 14);
 		Period periodToNextJavaRelease = Period.between(today, java8Release);
-		System.out.println("Months left between today and Java 8 release : " + periodToNextJavaRelease.getMonths());
+		System.out.println( periodToNextJavaRelease.getMonths());
 	}
 
 	// 包含时差信息的日期和时间
@@ -155,13 +155,13 @@ public class DateTest {
 		LocalDateTime datetime = LocalDateTime.of(2018, Month.FEBRUARY, 14, 19, 30);
 		ZoneOffset offset = ZoneOffset.of("+05:30");
 		OffsetDateTime date = OffsetDateTime.of(datetime, offset);
-		System.out.println("Date and Time with timezone offset in Java : " + date);
+		System.out.println(date);
 	}
 
 	// 获取时间戳
 	public void getTimestamp() {
 		Instant timestamp = Instant.now();
-		System.out.println("What is value of this instant " + timestamp);
+		System.out.println(timestamp.toEpochMilli());
 	}
 
 	// 使用预定义的格式化工具去解析或格式化日期
@@ -176,5 +176,7 @@ public class DateTest {
 		System.out.println(LocalTime.now());
 		System.out.println(LocalDate.now());
 		System.out.println(new Date());
+		DateTest dateTest = new DateTest();
+		dateTest.getTimestamp();
 	}
 }
