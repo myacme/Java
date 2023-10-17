@@ -53,6 +53,13 @@
         <!--            <scope>system</scope>-->
         <!--            <systemPath>${project.basedir}/src/main/resources/lib/gdal.jar</systemPath>-->
         <!--        </dependency>-->
+                <dependency>
+                    <groupId>aes</groupId>
+                    <artifactId>aes</artifactId>
+                    <version>1.0.0</version>
+                    <scope>system</scope>
+                    <systemPath>${project.basedir}/src/main/resources/lib/aes.jar</systemPath>
+                </dependency>
     </dependencies>
 
     <build>
