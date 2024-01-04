@@ -147,7 +147,7 @@ public class DateTest {
 		LocalDate today = LocalDate.now();
 		LocalDate java8Release = LocalDate.of(2018, Month.MAY, 14);
 		Period periodToNextJavaRelease = Period.between(today, java8Release);
-		System.out.println( periodToNextJavaRelease.getMonths());
+		System.out.println(periodToNextJavaRelease.getMonths());
 	}
 
 	// 包含时差信息的日期和时间
@@ -171,12 +171,105 @@ public class DateTest {
 		System.out.printf("Date generated from String %s is %s %n", dayAfterTommorrow, formatted);
 	}
 
+	/**
+	 * 判断时间是否超过三个月
+	 */
+	public void comparisonTime() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String dayAfterTommorrow = "2024-01-03 11:11:11";
+		LocalDateTime formatted = LocalDateTime.parse(dayAfterTommorrow, formatter);
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime localDateTime = now.plusMonths(3);
+		System.out.print(localDateTime.isBefore(now));
+	}
+
+	/**
+	 * LocalDate转String
+	 *
+	 * @param localDate localDate对象
+	 * @param pattern   格式示例： yyyy-MM-dd
+	 * @return
+	 */
+	public static String LocalDatetoStr(LocalDate localDate, String pattern) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+		return localDate.format(formatter);
+	}
+
+	/**
+	 * String转LocalDate
+	 *
+	 * @param dateStr 日期的字符串
+	 * @param pattern 格式示例： yyyy-MM-dd
+	 * @return
+	 */
+	public static LocalDate toLocalDate(String dateStr, String pattern) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+		return LocalDate.parse(dateStr, formatter);
+	}
+
+	/**
+	 * Date转LocalDateTime
+	 *
+	 * @param date   jdk6 日期对象
+	 * @param zoneId 时区id
+	 * @return
+	 */
+	public static LocalDateTime toLocalDateTime(Date date, ZoneId zoneId) {
+		// toInstant()：将Date对象转换成为Instant(瞬时)对象
+		// ofInstant(): 将瞬时对象转换成为LocalDateTime对象
+		Instant instant = date.toInstant();
+		if (zoneId == null) {
+			zoneId = ZoneId.systemDefault();
+		}
+		LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		return LocalDateTime.ofInstant(instant, zoneId);
+	}
+
+	/**
+	 * LocalDateTime转Date
+	 *
+	 * @param localDateTime 日期时间对象
+	 * @return
+	 */
+	public static Date LocalDateTimetoDate(LocalDateTime localDateTime, ZoneId zoneId) {
+		if (zoneId == null) {
+			zoneId = ZoneId.systemDefault();
+		}
+		ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+		Instant instant = zonedDateTime.toInstant();
+		return Date.from(instant);
+	}
+
+	/**
+	 * 将long类型的timestamp转为LocalDateTime
+	 */
+	public static LocalDateTime getDateTimeOfTimestamp(long timestamp) {
+		Instant instant = Instant.ofEpochMilli(timestamp);
+		ZoneId zone = ZoneId.systemDefault();
+		return LocalDateTime.ofInstant(instant, zone);
+	}
+
+	/**
+	 * 将LocalDateTime转为long类型的timestamp
+	 *
+	 * @param localDateTime
+	 * @return
+	 */
+	public static long getTimestampOfDateTime(LocalDateTime localDateTime) {
+		ZoneId zone = ZoneId.systemDefault();
+		Instant instant = localDateTime.atZone(zone).toInstant();
+		return instant.toEpochMilli();
+	}
+
+
 	public static void main(String[] args) {
 		System.out.println(LocalDateTime.now());
 		System.out.println(LocalTime.now());
 		System.out.println(LocalDate.now());
+		System.out.println(Instant.now().toEpochMilli());
 		System.out.println(new Date());
 		DateTest dateTest = new DateTest();
-		dateTest.getTimestamp();
+		dateTest.comparisonTime();
+		System.out.println(new Date().getTime());
 	}
 }
