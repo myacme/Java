@@ -11,13 +11,13 @@ package javatest;
 
 public abstract class AbstractClass {
 
-	public abstract void abc();
+	public abstract void abc(int a);
 
 	
 	public static AbstractClass getInstance(){
 		AbstractClass abstractClass = new AbstractClass() {
 			@Override
-			public void abc() {
+			public void abc(int a) {
 			}
 		};
 		return abstractClass;

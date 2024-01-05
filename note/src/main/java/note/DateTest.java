@@ -180,7 +180,8 @@ public class DateTest {
 		LocalDateTime formatted = LocalDateTime.parse(dayAfterTommorrow, formatter);
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime localDateTime = now.plusMonths(3);
-		System.out.print(localDateTime.isBefore(now));
+		System.out.print(localDateTime.isBefore(formatted));
+		System.out.println(LocalDateTime.now().plusMonths(3).isBefore(formatted));
 	}
 
 	/**
