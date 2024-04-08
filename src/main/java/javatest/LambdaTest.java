@@ -1,6 +1,8 @@
 package javatest;
 
 
+import java.io.Serializable;
+
 /**
  * @author ljx
  * @version 1.0.0
@@ -17,7 +19,7 @@ interface LambdaTestInterface1 {
 	int add(int a);
 }
 
-class LambdaTest {
+class LambdaTest implements Serializable {
 
 	public static int add(LambdaTestInterface lti) {
 		return lti.add(1, 2);

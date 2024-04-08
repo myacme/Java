@@ -73,7 +73,23 @@ public class Zz {
 		}
 	}
 
+
+	/**
+	 * mybatis 变量提取
+	 */
+	public static void e() {
+		String a = "SELECT itemvalue FROM d_project_parameter WHERE engineeringid = #{engineeringid}, ${qwer} AND projectid = #{projectid} and itemkey = '图签日期'";
+		String regEx = "([#|$]\\{[a-z0-9_]*})";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(a);
+		int i = 0;
+		while (m.find(i)) {
+			System.out.println(m.group(1));
+			i = m.end();
+		}
+	}
+
 	public static void main(String[] args) {
-		d();
+		e();
 	}
 }
