@@ -90,6 +90,6 @@ public class Zz {
 	}
 
 	public static void main(String[] args) {
-		e();
+		d();
 	}
 }

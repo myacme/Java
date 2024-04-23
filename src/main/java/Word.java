@@ -1,12 +1,18 @@
+import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.data.MiniTableRenderData;
+import com.deepoove.poi.data.PictureRenderData;
+import com.deepoove.poi.data.RowRenderData;
+import com.deepoove.poi.data.TextRenderData;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -139,7 +145,74 @@ public class Word {
 		}
 	}
 
-	public static void main(String[] args) {
-		substitutionVariable();
+	/**
+	 * 替换图片
+	 *
+	 * @param doc
+	 * @param key
+	 * @param inputStream
+	 * @param name
+	 * @throws Exception
+	 */
+	private static void replacePicture(XWPFDocument doc, String key, InputStream inputStream, String name) throws Exception {
+		for (XWPFParagraph p : doc.getParagraphs()) {
+			for (XWPFRun r : p.getRuns()) {
+				String text = r.getText(0);
+				if (text != null) {
+					text = text.trim();
+					if (text.contains(key)) {
+						r.setText(text.replace(key, ""), 0);
+						int width = Units.pixelToEMU(300);
+						int height = Units.pixelToEMU(200);
+						r.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_PNG, name, width, height);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	public static void deepoove() throws IOException {
+		List<String> head = List.of("A1", "A2", "A3");
+		List<Map<String, Object>> data = List.of(
+				Map.of("A1", "--Replacement Text 1--", "A2", "---Replacement Text 2---", "A3", "---Replacement Text 3---"),
+				Map.of("A1", "--Replacement Text 1--", "A2", "---Replacement Text 2---", "A3", "---Replacement Text 2---"));
+		Map<String, Object> fileValue = new HashMap<>();
+		fileValue.put("${A1}", "----替换文本----");
+		List<TextRenderData> rowData = List.of(
+				new TextRenderData("A1"),
+				new TextRenderData("A2"),
+				new TextRenderData("A3"));
+		RowRenderData rowRenderData = new RowRenderData(rowData);
+		List<RowRenderData> datas = List.of(rowRenderData, rowRenderData);
+		fileValue.put("${A2}", new MiniTableRenderData(rowRenderData,datas));
+		fileValue.put("${A3}", new PictureRenderData(300, 200, "C:\\Users\\MyAcme\\Desktop\\picture.png"));
+		FileInputStream file = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\test.docx");
+		FileInputStream in = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\picture.png");
+		XWPFTemplate template = XWPFTemplate.compile("C:\\Users\\MyAcme\\Desktop\\test.docx").render(fileValue);
+		FileOutputStream out = new FileOutputStream("C:\\Users\\MyAcme\\Desktop\\replace.docx");
+		template.write(out);
+	}
+
+
+	public static void main(String[] args) throws IOException {
+		try {
+			// 打开现有的Word文档
+			XWPFDocument document = new XWPFDocument(Files.newInputStream(Paths.get("C:\\Users\\MyAcme\\Desktop\\replace.docx")));
+			FileInputStream in = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\picture.png");
+			// 替换文档中的变量
+//			replaceText(document, "${A1}", "--Replacement Text 1--");
+//			replaceText(document, "${A2}", "---Replacement Text 2---");
+			replacePicture(document, "${A1}", in, "picture.png");
+			// 保存文档
+			FileOutputStream out = new FileOutputStream("C:\\Users\\MyAcme\\Desktop\\replace.docx");
+			document.write(out);
+			out.close();
+			document.close();
+			System.out.println("Word文档中的变量替换完成！");
+		} catch (Exception e) {
+			System.out.println("发生异常：" + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }
