@@ -89,7 +89,23 @@ public class Zz {
 		}
 	}
 
+
+	/**
+	 *
+	 */
+	public static void f() {
+		String a = "起去q1m";
+		String regEx = "(\\d)";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(a);
+		int i = 0;
+		while (m.find(i)) {
+			System.out.println(m.group(1));
+			i = m.end();
+		}
+	}
+
 	public static void main(String[] args) {
-		d();
+		f();
 	}
 }

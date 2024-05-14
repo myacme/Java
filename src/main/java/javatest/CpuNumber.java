@@ -10,6 +10,7 @@ package javatest;
 
 public class CpuNumber {
 
+
 	public static void main(String[] args) {
 		//查看本机cpu核数
 		System.out.println(Runtime.getRuntime().availableProcessors());
