@@ -1,7 +1,7 @@
 package javatest; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: java.copy
+ * FileName: java.CopyFile
  * <p>
  * Author:   MyAcme
  * <p>
@@ -31,7 +31,7 @@ import java.io.*;
 
  */
 
-public class copy {
+public class CopyFile {
     public static void main(String[] args) {
         try {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream("E:\\text.txt"));

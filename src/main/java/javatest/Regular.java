@@ -1,5 +1,5 @@
 package javatest; /**
- * FileName: java.Zz
+ * FileName: java.Regular
  * <p>
  * Author:   liujixiang
  * <p>
@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * @since 1.0.0
  */
 
-public class Zz {
+public class Regular {
 	public static void a() {
 		//		String a="共940条记录 1/94页";
 		String a = "共找到 483 个小区";

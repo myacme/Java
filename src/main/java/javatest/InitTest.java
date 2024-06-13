@@ -7,7 +7,7 @@ package javatest;
  * @create 2022/8/3 17:20
  */
 
-public class sdsf {
+public class InitTest {
 	private String a;
 	private String b;
 
@@ -24,7 +24,7 @@ public class sdsf {
 		this.a = abc;
 	}
 
-	public sdsf() {
+	public InitTest() {
 		System.out.println("构造器");
 	}
 
@@ -33,7 +33,7 @@ public class sdsf {
 	}
 
 	public static void main(String[] args) {
-		sdsf sdsf = new sdsf();
+		InitTest InitTest = new InitTest();
 		System.out.println("");
 	}
 }

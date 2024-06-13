@@ -1,7 +1,7 @@
 package javatest; /**
  * Copyright (C), 2015-2020, XXX有限公司
  * <p>
- * FileName: java.test
+ * FileName: java.基本类型向上转型
  * <p>
  * Author:   MyAcme
  * <p>
@@ -26,7 +26,7 @@ package javatest; /**
  * @since 1.0.0
  */
 
-public class test {
+public class 基本类型向上转型 {
 
 	public static void main(String[] args) {
 //        String str = "123";

@@ -26,7 +26,7 @@ public class Word {
 	public static void substitutionVariable() {
 		try {
 			// 打开现有的Word文档
-			XWPFDocument document = new XWPFDocument(Files.newInputStream(Paths.get("C:\\Users\\MyAcme\\Desktop\\test.docx")));
+			XWPFDocument document = new XWPFDocument(Files.newInputStream(Paths.get("C:\\Users\\MyAcme\\Desktop\\基本类型向上转型.docx")));
 			// 替换文档中的变量
 			replaceText(document, "${A1}", "--Replacement Text 1--");
 //			replaceText(document, "${A2}", "---Replacement Text 2---");
@@ -187,9 +187,9 @@ public class Word {
 		List<RowRenderData> datas = List.of(rowRenderData, rowRenderData);
 		fileValue.put("${A2}", new MiniTableRenderData(rowRenderData,datas));
 		fileValue.put("${A3}", new PictureRenderData(300, 200, "C:\\Users\\MyAcme\\Desktop\\picture.png"));
-		FileInputStream file = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\test.docx");
+		FileInputStream file = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\基本类型向上转型.docx");
 		FileInputStream in = new FileInputStream("C:\\Users\\MyAcme\\Desktop\\picture.png");
-		XWPFTemplate template = XWPFTemplate.compile("C:\\Users\\MyAcme\\Desktop\\test.docx").render(fileValue);
+		XWPFTemplate template = XWPFTemplate.compile("C:\\Users\\MyAcme\\Desktop\\基本类型向上转型.docx").render(fileValue);
 		FileOutputStream out = new FileOutputStream("C:\\Users\\MyAcme\\Desktop\\replace.docx");
 		template.write(out);
 	}

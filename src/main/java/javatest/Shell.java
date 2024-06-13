@@ -252,8 +252,8 @@
 //        Shell ssh = new Shell(ip,port,user,password);
 //        ssh.executeCommands(cmd);
 //        String result = ssh.getResponse();
-//        String[] test = result.split("\n");
-//        for (String s : test) {
+//        String[] 基本类型向上转型 = result.split("\n");
+//        for (String s : 基本类型向上转型) {
 //            if (s.contains("dsms") && !s.contains("grep")) {
 //                System.out.println(s);
 //            }

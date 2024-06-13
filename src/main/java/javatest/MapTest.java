@@ -1,18 +1,4 @@
-package javatest; /**
- * FileName: java.MapTest
- * <p>
- * Author:   liujixiang
- * <p>
- * Date:     2021/4/13 10:28
- * <p>
- * Description:
- * <p>
- * History:
- *
- * <author>          <time>          <version>          <desc>
- * <p>
- * 作者姓名           修改时间           版本号              描述
- */
+package javatest;
 
 
 import java.util.Map;
