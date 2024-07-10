@@ -23,9 +23,9 @@
 	</build>
 	<modules>
 		<module>note</module>
-	</modules>
+        <module>network</module>
+    </modules>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
