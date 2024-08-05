@@ -14,7 +14,7 @@ import java.util.Map;
  * @date 2022/6/29
  */
 
-public class ExcelUtil {
+public class ExportExcel {
 
 
     public static void export(String title, List<String> keyList, List<String> fieldList, List<Map<String, Object>> dataList, String fileName) throws Exception {
