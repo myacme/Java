@@ -1,21 +1,4 @@
-package javatest; /**
- * Copyright (C), 2015-2020, XXX有限公司
- * <p>
- * FileName: java.ReadExcelFile
- * <p>
- * Author:   MyAcme
- * <p>
- * Date:     2020/9/8 14:00
- * <p>
- * Description:
- * <p>
- * History:
- *
- * <author>          <time>          <version>          <desc>
- * <p>
- * 作者姓名           修改时间           版本号              描述
- */
-
+package javatest;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;

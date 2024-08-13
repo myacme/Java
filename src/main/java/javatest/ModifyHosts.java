@@ -24,8 +24,6 @@ public class ModifyHosts {
 				lines.add(line);
 			}
 			System.out.println(Arrays.toString(lines.toArray()));
-
-
 			BufferedWriter bufferedWriter = new BufferedWriter(new BufferedWriter(new FileWriter(host)));
 			bufferedWriter.write("#11111111111111111111111111");
 		} catch (FileNotFoundException e) {
