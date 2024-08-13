@@ -1,20 +1,4 @@
-package javatest; /**
- * Copyright (C), 2015-2020, XXX有限公司
- * <p>
- * FileName: java.基本类型向上转型
- * <p>
- * Author:   MyAcme
- * <p>
- * Date:     2020/1/10 10:32
- * <p>
- * Description:
- * <p>
- * History:
- *
- * <author>          <time>          <version>          <desc>
- * <p>
- * 作者姓名           修改时间           版本号              描述
- */
+package javatest;
 
 
 /**
