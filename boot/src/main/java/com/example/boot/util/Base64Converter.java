@@ -1,6 +1,5 @@
-package com.example.boot;
+package com.example.boot.util;
 
-import com.example.boot.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;

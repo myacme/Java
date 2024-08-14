@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
  * @create 2022/1/11 11:20
  */
 @Component
-public class TimedTaskStart implements CommandLineRunner {
-	private static final Logger logger = LoggerFactory.getLogger(TimedTaskStart.class);
+public class CommandLineRunnerDemo implements CommandLineRunner {
+	private static final Logger logger = LoggerFactory.getLogger(CommandLineRunnerDemo.class);
 
 
 	@Override

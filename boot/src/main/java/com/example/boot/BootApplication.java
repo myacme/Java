@@ -1,4 +1,4 @@
-package com;
+package com.example.boot;
 
 import com.example.boot.util.SpringContextUtil;
 import org.springframework.boot.SpringApplication;

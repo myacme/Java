@@ -1,7 +1,7 @@
 package com.example.boot.Interceptor;
 
 
-import com.example.boot.Base64Converter;
+import com.example.boot.util.Base64Converter;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

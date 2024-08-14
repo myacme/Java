@@ -1,7 +1,7 @@
 package com.example.boot.fliter;
 
 
-import com.example.boot.Base64Converter;
+import com.example.boot.util.Base64Converter;
 import com.example.boot.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.CollectionUtils;
