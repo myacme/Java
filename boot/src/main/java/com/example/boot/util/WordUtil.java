@@ -67,6 +67,8 @@ public class WordUtil {
             circularParagraph(doc, variables);
             //循环表格
             circularTable(doc, variables);
+            //循环页眉
+            circularHeader(doc, variables);
             // 保存文档
             doc.write(out);
             log.info("Word文档中的变量替换完成！");
@@ -78,6 +80,13 @@ public class WordUtil {
         return null;
     }
 
+    /**
+     * 循环段落
+     *
+     * @param doc
+     * @param variables
+     * @throws Exception
+     */
     private static void circularParagraph(XWPFDocument doc, List<Variable> variables) throws Exception {
         for (XWPFParagraph p : doc.getParagraphs()) {
             for (XWPFRun r : p.getRuns()) {
@@ -88,6 +97,7 @@ public class WordUtil {
                         for (String key : keys) {
                             Variable variable = searchVariable(key, variables);
                             replaceVariable(doc, null, p, r, text, variable);
+                            text = r.getText(0);
                         }
                     }
                 }
@@ -95,6 +105,13 @@ public class WordUtil {
         }
     }
 
+    /**
+     * 循环表格
+     *
+     * @param doc
+     * @param variables
+     * @throws Exception
+     */
     private static void circularTable(XWPFDocument doc, List<Variable> variables) throws Exception {
         List<XWPFTable> tables = doc.getTables();
         for (XWPFTable table : tables) {
@@ -111,10 +128,68 @@ public class WordUtil {
                                             for (String rKey : rkeys) {
                                                 Variable rVariable = searchVariable(rKey, variables);
                                                 replaceVariable(doc, tableCell, p, r, rText, rVariable);
+                                                rText = r.getText(0);
                                             }
                                         }
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 循环页眉
+     *
+     * @param doc
+     * @param variables
+     * @throws Exception
+     */
+    private static void circularHeader(XWPFDocument doc, List<Variable> variables) throws Exception {
+        List<XWPFHeader> headers = doc.getHeaderList();
+        for (XWPFHeader header : headers) {
+            for (XWPFParagraph p : header.getParagraphs()) {
+                for (XWPFRun r : p.getRuns()) {
+                    String text = r.getText(0);
+                    if (StringUtils.isNotEmpty(text)) {
+                        List<String> keys = MybatisUtil.extractVariable(text);
+                        if (!CollectionUtils.isEmpty(keys)) {
+                            for (String key : keys) {
+                                Variable variable = searchVariable(key, variables);
+                                replaceVariable(doc, null, p, r, text, variable);
+                                text = r.getText(0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 循环页脚
+     *
+     * @param doc
+     * @param variables
+     * @throws Exception
+     */
+    private static void circularFooter(XWPFDocument doc, List<Variable> variables) throws Exception {
+        List<XWPFFooter> footers = doc.getFooterList();
+        for (XWPFFooter footer : footers) {
+            for (XWPFParagraph p : footer.getParagraphs()) {
+                for (XWPFRun r : p.getRuns()) {
+                    String text = r.getText(0);
+                    if (StringUtils.isNotEmpty(text)) {
+                        List<String> keys = MybatisUtil.extractVariable(text);
+                        if (!CollectionUtils.isEmpty(keys)) {
+                            for (String key : keys) {
+                                Variable variable = searchVariable(key, variables);
+                                replaceVariable(doc, null, p, r, text, variable);
+                                text = r.getText(0);
                             }
                         }
                     }
