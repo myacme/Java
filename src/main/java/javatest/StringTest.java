@@ -17,10 +17,10 @@ class StringTest {
         System.out.println(t.intern());
         System.out.println(s.intern() == s);
         System.out.println(t.intern() == t);
-        String s1 = new StringBuffer("java").toString();
+        String s1 = new String("java");
         System.out.println(s1.intern() == s1);
         System.out.println(s == s1);
-        String t1 = new StringBuffer("wolail").toString();
+        String t1 = new String("wolail");
         System.out.println(t1.intern() == t1);
     }
 
