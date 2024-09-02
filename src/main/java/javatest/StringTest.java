@@ -26,6 +26,7 @@ class StringTest {
 
     public static void test2(String str) {
         str = "hello world";
+        System.out.println(str);
     }
 
     public static void main(String[] args) {
