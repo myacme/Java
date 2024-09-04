@@ -8,6 +8,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author ljx
@@ -24,8 +26,11 @@ public class ServerDemo {
         Selector selector = Selector.open();
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         while (selector.select() > 0) {
-            selector.selectedKeys().forEach(selectionKey -> {
-                if (selectionKey.isAcceptable()) {
+            Set<SelectionKey> selectionKeys = selector.selectedKeys();
+            Iterator<SelectionKey> iterator = selectionKeys.iterator();
+            while (iterator.hasNext()) {
+                SelectionKey next = iterator.next();
+                if (next.isAcceptable()) {
                     try {
                         SocketChannel accept = serverSocketChannel.accept();
                         accept.configureBlocking(false);
@@ -33,10 +38,21 @@ public class ServerDemo {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                }else if (selectionKey.isReadable()) {
-
+                } else if (next.isReadable()) {
+                    try {
+                        SocketChannel channel = (SocketChannel) next.channel();
+                        int read = channel.read(buffer);
+                        if (read > 0) {
+                            buffer.flip();
+                            System.out.println(new String(buffer.array(), 0, read));
+                            buffer.clear();
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            });
+            }
+            iterator.remove();
         }
     }
 }
