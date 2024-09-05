@@ -1,13 +1,12 @@
 package reflex;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited // 可继承
 public @interface Value {
-	String value();
-	String tag();
+    String value();
+
+    String tag();
 }
