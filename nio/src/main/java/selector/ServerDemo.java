@@ -22,7 +22,6 @@ public class ServerDemo {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.configureBlocking(false);
         serverSocketChannel.bind(new InetSocketAddress(8080));
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
         Selector selector = Selector.open();
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         while (selector.select() > 0) {
@@ -31,28 +30,33 @@ public class ServerDemo {
             while (iterator.hasNext()) {
                 SelectionKey next = iterator.next();
                 if (next.isAcceptable()) {
-                    try {
-                        SocketChannel accept = serverSocketChannel.accept();
-                        accept.configureBlocking(false);
-                        accept.register(selector, SelectionKey.OP_READ);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    SocketChannel accept = serverSocketChannel.accept();
+                    accept.configureBlocking(false);
+                    accept.register(selector, SelectionKey.OP_READ);
+                    System.out.println("客户端连接成功");
+                    accept.write(ByteBuffer.wrap("你已连接到服务器！".getBytes()));
                 } else if (next.isReadable()) {
-                    try {
-                        SocketChannel channel = (SocketChannel) next.channel();
-                        int read = channel.read(buffer);
-                        if (read > 0) {
-                            buffer.flip();
-                            System.out.println(new String(buffer.array(), 0, read));
-                            buffer.clear();
+                    SocketChannel channel = (SocketChannel) next.channel();
+                    ByteBuffer buffer = ByteBuffer.allocate(1024);
+                    int read = channel.read(buffer);
+                    String msg = null;
+                    if (read > 0) {
+                        buffer.flip();
+                        msg = new String(buffer.array(), 0, read);
+                        System.out.println(msg);
+                        buffer.clear();
+                    }
+                    //广播消息
+                    channel.register(selector, SelectionKey.OP_WRITE);
+                    for (SelectionKey key : selector.keys()) {
+                        if (key.isValid() && key.channel() instanceof SocketChannel) {
+                            SocketChannel targetChannel = (SocketChannel) key.channel();
+                            targetChannel.write(ByteBuffer.wrap(("广播消息：" + msg).getBytes()));
                         }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
                 }
+                iterator.remove();
             }
-            iterator.remove();
         }
     }
 }
