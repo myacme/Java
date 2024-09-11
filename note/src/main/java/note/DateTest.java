@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -28,11 +27,10 @@ public class DateTest {
         dateTest.comparisonTime();
         System.out.println(new Date().getTime());
         dateTest.timeDifference();
-
     }
 
     @Test
-    public void yaerDay(){
+    public void yaerDay() {
         int year = Year.now().getValue();
         LocalDate yearStart = LocalDate.of(year, 1, 1);
         LocalDate yearEnd = LocalDate.of(year, 12, 31);
@@ -44,10 +42,20 @@ public class DateTest {
      * 获取今天是今年的第几天
      */
     @Test
-    public void dayOfYear(){
-        LocalDate today = LocalDate.now(); // 获取今天的日期
-        int dayOfYear = today.get(ChronoField.DAY_OF_YEAR); // 获取今天是今年的第几天
+    public void dayOfYear() {
+        LocalDate today = LocalDate.now();
+        int dayOfYear = today.getDayOfYear();
         System.out.println("今天是今年的第 " + dayOfYear + " 天。");
+    }
+
+    /**
+     * 获取今天是本月的第几天
+     */
+    @Test
+    public void dayOfMonth() {
+        LocalDate today = LocalDate.now();
+        int dayOfMonth = today.getDayOfMonth();
+        System.out.println("今天是本月的第 " + dayOfMonth + " 天。");
     }
 
     //获取今天的日期
