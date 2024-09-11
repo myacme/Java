@@ -17,14 +17,14 @@ public class Demo {
 //        for (Map.Entry<Integer,String> entry:entrySet){
 //            System.out.println(entry.getKey()+"--"+entry.getValue());
 //        }
-        entrySet.forEach(k-> System.out.println(k));
+        entrySet.stream()
+                .filter(k-> k.getKey()>2)
+                .forEach(k-> System.out.println(k));
         int i= 0b011;
         System.out.println(i);
         String a="abc";
         String b=a;
         System.out.println(a==b);
     }
-
-
 }
 

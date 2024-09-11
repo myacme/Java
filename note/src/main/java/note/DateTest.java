@@ -1,8 +1,11 @@
 package note;
 
 
+import org.junit.Test;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -13,6 +16,39 @@ import java.util.Date;
  */
 
 public class DateTest {
+
+
+    public static void main(String[] args) {
+        System.out.println(LocalDateTime.now());
+        System.out.println(LocalTime.now());
+        System.out.println(LocalDate.now());
+        System.out.println(Instant.now().toEpochMilli());
+        System.out.println(new Date());
+        DateTest dateTest = new DateTest();
+        dateTest.comparisonTime();
+        System.out.println(new Date().getTime());
+        dateTest.timeDifference();
+
+    }
+
+    @Test
+    public void yaerDay(){
+        int year = Year.now().getValue();
+        LocalDate yearStart = LocalDate.of(year, 1, 1);
+        LocalDate yearEnd = LocalDate.of(year, 12, 31);
+        long daysInYear = ChronoUnit.DAYS.between(yearStart, yearEnd) + 1;
+        System.out.println("Days in year " + year + ": " + daysInYear);
+    }
+
+    /**
+     * 获取今天是今年的第几天
+     */
+    @Test
+    public void dayOfYear(){
+        LocalDate today = LocalDate.now(); // 获取今天的日期
+        int dayOfYear = today.get(ChronoField.DAY_OF_YEAR); // 获取今天是今年的第几天
+        System.out.println("今天是今年的第 " + dayOfYear + " 天。");
+    }
 
     //获取今天的日期
     public void getCurrentDate() {
@@ -272,18 +308,5 @@ public class DateTest {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDateTime.atZone(zone).toInstant();
         return instant.toEpochMilli();
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println(LocalDateTime.now());
-        System.out.println(LocalTime.now());
-        System.out.println(LocalDate.now());
-        System.out.println(Instant.now().toEpochMilli());
-        System.out.println(new Date());
-        DateTest dateTest = new DateTest();
-        dateTest.comparisonTime();
-        System.out.println(new Date().getTime());
-        dateTest.timeDifference();
     }
 }
