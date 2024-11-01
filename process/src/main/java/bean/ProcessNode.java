@@ -29,7 +29,7 @@ CREATE TABLE `d_flow_work_node` (
   `y` varchar(255) DEFAULT NULL,
   `process_id` varchar(32) NOT NULL COMMENT '运行id',
   `flow_id` varchar(32) NOT NULL,
-  `status` int(1) NOT NULL COMMENT '      状态\r\n     0 审批中\r\n     1 已通过\r\n     2 未通过',
+  `status` int(1) NOT NULL COMMENT '      状态\r\n     0 审批中\r\n     1 已通过\r\n     2 未通过\r\n    3 驳回',
   `approval_date` datetime DEFAULT NULL,
   PRIMARY KEY (`process_id`,`flow_id`) USING BTREE,
   KEY `I_configure_id` (`configure_id`) USING BTREE
