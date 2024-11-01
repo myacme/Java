@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ProcessConfigureMapper">
+
+    <resultMap id="BaseResultMapOfTree" type="bean.ConfigureNode">
+        <result property="configureId" column="configure_id" jdbcType="VARCHAR"/>
+        <result property="configureType" column="configure_type" jdbcType="VARCHAR"/>
+        <result property="configureName" column="configure_name" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="node_id" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="node_name" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="parentNodeId" column="parent_node_id" jdbcType="VARCHAR"/>
+        <result property="nextNodeId" column="next_node_id" jdbcType="VARCHAR"/>
+        <result property="x" column="x" jdbcType="VARCHAR"/>
+        <result property="y" column="y" jdbcType="VARCHAR"/>
+        <collection property="nextNode" column="{parentNodeId=node_id}" ofType="bean.ConfigureNode"
+                    select="queryNodesByParentId">
+        </collection>
+        <collection property="peoples" column="{nodeId=node_id}" ofType="bean.People"
+                    select="queryPeoplesByNodeid">
+        </collection>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="bean.ConfigureNode">
+        <result property="configureId" column="configure_id" jdbcType="VARCHAR"/>
+        <result property="configureType" column="configure_type" jdbcType="VARCHAR"/>
+        <result property="configureName" column="configure_name" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="node_id" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="node_name" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="parentNodeId" column="parent_node_id" jdbcType="VARCHAR"/>
+        <result property="nextNodeId" column="next_node_id" jdbcType="VARCHAR"/>
+        <result property="x" column="x" jdbcType="VARCHAR"/>
+        <result property="y" column="y" jdbcType="VARCHAR"/>
+        <collection property="peoples" column="{nodeId=node_id}" ofType="bean.People"
+                    select="queryPeoplesByNodeid">
+        </collection>
+    </resultMap>
+
+    <select id="queryById" resultType="bean.Configure">
+        SELECT configure_id configureId,
+               configure_type configureType,
+               configure_name configureName,
+               valid
+            FROM b_flow_config
+            WHERE configure_id = #{configureId}
+                AND valid  = 1
+    </select>
+
+    <select id="queryAll" resultType="map">
+        SELECT configure_id configureId,
+               configure_type configureType,
+               configure_name configureName,
+               valid
+            FROM b_flow_config
+            WHERE valid  = 1
+    </select>
+
+    <select id="queryAllNodesOfTree" resultMap="BaseResultMapOfTree">
+        SELECT a.configure_id,
+               a.configure_type,
+               a.configure_name,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y
+            FROM b_flow_config a
+                     JOIN b_flow_node b ON a.configure_id = b.configure_id
+            WHERE a.configure_id = #{configureId}
+              AND a.valid  = 1
+              AND sign = 0
+    </select>
+
+    <select id="queryNodesByParentId" resultMap="BaseResultMapOfTree">
+        SELECT a.configure_id,
+               a.configure_type,
+               a.configure_name,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y
+            FROM b_flow_config a
+                     JOIN b_flow_node b ON a.configure_id = b.configure_id
+            WHERE b.parent_node_id = #{parentNodeId}
+              AND a.valid  = 1
+    </select>
+
+    <select id="queryAllNodes" resultMap="BaseResultMap">
+        SELECT a.configure_id,
+               a.configure_type,
+               a.configure_name,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y
+            FROM b_flow_config a
+                JOIN b_flow_node b ON a.configure_id = b.configure_id
+            WHERE a.configure_id = #{configureId}
+              AND a.valid  = 1
+    </select>
+
+    <insert id="addConfigure">
+        INSERT INTO b_flow_config(configure_id, configure_type, configure_name)
+            VALUES (#{configureId}, #{configureType}, #{configureName})
+    </insert>
+
+    <update id="updateConfigure">
+        UPDATE b_flow_config
+        SET configure_type = #{configureType},
+            configure_name = #{configureName}
+            WHERE configure_id = #{configureId}
+    </update>
+
+    <delete id="deleteConfigure">
+        DELETE
+            FROM b_flow_config
+            WHERE configure_id = #{configureId}
+              AND valid  = 1
+    </delete>
+
+    <!--******************************************** 流程节点 *******************************************-->
+
+    <insert id="batchInsertNode" parameterType="java.util.List">
+        INSERT INTO b_flow_node(configure_id, node_id, node_name, sign, parent_node_id, next_node_id, x, y) VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.configureId}, #{stu.nodeId}, #{stu.nodeName}, #{stu.sign}, #{stu.parentNodeId}, #{stu.nextNodeId},
+            #{stu.x}, #{stu.y})
+        </foreach>
+    </insert>
+
+    <delete id="deleteNode" parameterType="java.lang.String">
+        DELETE
+            FROM b_flow_node
+            WHERE configure_id = #{configureId}
+    </delete>
+
+    <!--******************************************** 审批人员 *******************************************-->
+    <select id="queryPeoplesByNodeid" resultType="bean.People">
+        SELECT configure_id configureId,
+               node_id nodeId,
+               user_id userId,
+               user_name userName
+            FROM b_flow_people
+            WHERE node_id = #{nodeId}
+    </select>
+
+    <insert id="batchInsertPeople" parameterType="java.util.List">
+        INSERT INTO b_flow_people(configure_id, node_id, user_id, user_name)
+        VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.configureId}, #{stu.nodeId}, #{stu.userId}, #{stu.userName})
+        </foreach>
+    </insert>
+
+    <delete id="deletePeople">
+        DELETE FROM b_flow_people WHERE configure_id = #{configureId}
+    </delete>
+
+    <select id="peopleSelect" resultType="bean.People">
+        SELECT b.username userId,
+               b.full_name userName
+            FROM portal_dev.sc_user a
+                     JOIN portal_dev.sc_user b ON a.organization_code = b.organization_code
+                AND a.username = #{userId}
+                     JOIN portal_dev.sc_user_role c ON b.id = c.user_id
+                     JOIN portal_dev.sc_role d ON c.role_id = d.id
+                AND d.role_code = 'ymksplc'
+    </select>
+
+</mapper>

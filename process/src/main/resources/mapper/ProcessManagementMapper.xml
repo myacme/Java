@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ProcessManagementMapper">
+
+    <resultMap id="BaseResultMapOfConfigureTree" type="bean.ProcessNode">
+        <result property="configureId" column="configure_id" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="node_id" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="node_name" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="parentNodeId" column="parent_node_id" jdbcType="VARCHAR"/>
+        <result property="nextNodeId" column="next_node_id" jdbcType="VARCHAR"/>
+        <result property="x" column="x" jdbcType="VARCHAR"/>
+        <result property="y" column="y" jdbcType="VARCHAR"/>
+        <result property="processId" column="process_id" jdbcType="VARCHAR"/>
+        <result property="flowId" column="flow_id" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="approvalDate" column="approval_date" jdbcType="DATE"/>
+        <collection property="approves" column="{nodeId=node_id}" ofType="bean.Approve"
+                    select="queryApprovesByNodeidOfConfigure">
+        </collection>
+    </resultMap>
+
+    <resultMap id="BaseResultMapOfTree" type="bean.ProcessNode">
+        <result property="configureId" column="configure_id" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="node_id" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="node_name" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="parentNodeId" column="parent_node_id" jdbcType="VARCHAR"/>
+        <result property="nextNodeId" column="next_node_id" jdbcType="VARCHAR"/>
+        <result property="x" column="x" jdbcType="VARCHAR"/>
+        <result property="y" column="y" jdbcType="VARCHAR"/>
+        <result property="processId" column="process_id" jdbcType="VARCHAR"/>
+        <result property="flowId" column="flow_id" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="approvalDate" column="approval_date" jdbcType="DATE"/>
+        <collection property="nextNode" column="{parentNodeId=flow_id}"
+                    ofType="bean.ProcessNode"
+                    select="queryNodesByParentId">
+        </collection>
+        <collection property="approves" column="{flowId=flow_id}" ofType="bean.Approve"
+                    select="queryApprovesByNodeid">
+        </collection>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="bean.ProcessNode">
+        <result property="configureId" column="configure_id" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="node_id" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="node_name" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="parentNodeId" column="parent_node_id" jdbcType="VARCHAR"/>
+        <result property="nextNodeId" column="next_node_id" jdbcType="VARCHAR"/>
+        <result property="x" column="x" jdbcType="VARCHAR"/>
+        <result property="y" column="y" jdbcType="VARCHAR"/>
+        <result property="processId" column="process_id" jdbcType="VARCHAR"/>
+        <result property="flowId" column="flow_id" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="approvalDate" column="approval_date" jdbcType="DATE"/>
+        <collection property="approves" column="{flowId=flow_id}" ofType="bean.Approve"
+                    select="queryApprovesByNodeid">
+        </collection>
+    </resultMap>
+
+
+    <select id="queryAllNodesOfConfigureTree" resultMap="BaseResultMapOfConfigureTree">
+        SELECT a.configure_id,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y,
+               null process_id,
+               md5(uuid()) flow_id,
+               0 status,
+               null approval_date
+            FROM b_flow_config a
+                     JOIN b_flow_node b ON a.configure_id = b.configure_id
+            WHERE a.configure_id = #{configureId}
+              AND a.valid  = 1
+    </select>
+
+    <select id="queryApprovesByNodeidOfConfigure" resultType="bean.Approve">
+        SELECT configure_id configureId,
+               node_id nodeId,
+               user_id userId,
+               user_name userName,
+               null processId,
+               null flowId,
+               -1 status,
+               NULL approvalDate,
+               NULL remark
+            FROM b_flow_people
+            WHERE node_id = #{nodeId}
+    </select>
+
+    <!--******************************************** 流程 *******************************************-->
+    <select id="queryById" resultType="bean.Process">
+        SELECT a.configure_id configureId,
+               a.configure_type configureType,
+               a.configure_name configureName,
+               process_id processId,
+               business_id businessId,
+               initiator,
+               initiator_name initiatorName,
+               DATE_FORMAT(initiator_date, '%Y-%m-%d %H:%i:%s') initiatorDate,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approvalDate
+            FROM b_flow_config a
+                     JOIN d_flow_work b ON a.configure_id = b.configure_id
+            WHERE b.process_id = #{processId}
+              AND a.valid  = 1
+    </select>
+
+    <select id="queryByUser" resultType="java.util.Map">
+        SELECT a.configure_id configureId,
+               a.configure_type configureType,
+               a.configure_name configureName,
+               process_id processId,
+               business_id businessId,
+               initiator,
+               DATE_FORMAT(initiator_date, '%Y-%m-%d %H:%i:%s')  initiatorDate,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approvalDate
+            FROM b_flow_config a
+                     JOIN d_flow_work b ON a.configure_id = b.configure_id
+            WHERE b.initiator = #{userId}
+              AND a.valid  = 1
+            ORDER BY initiator_date DESC
+    </select>
+
+    <insert id="addProcess" parameterType="bean.Process">
+        INSERT INTO d_flow_work(configure_id, process_id, business_id, initiator, initiator_name, initiator_date, status, approval_date)
+            VALUES (#{configureId}, #{processId}, #{businessId}, #{initiator}, #{initiatorName}, #{initiatorDate}, #{status}, #{approvalDate})
+    </insert>
+
+    <!--******************************************** 节点 *******************************************-->
+    <select id="queryNode" resultMap="BaseResultMap">
+        SELECT configure_id,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y,
+               process_id,
+               flow_id,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approval_date
+            FROM d_flow_work_node
+            WHERE flow_id = #{flowId}
+    </select>
+
+    <select id="queryAllNodesOfTree" resultMap="BaseResultMapOfTree">
+        SELECT configure_id,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y,
+               process_id,
+               flow_id,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approval_date
+            FROM d_flow_work_node
+            WHERE process_id = #{processId}
+              AND sign = 0
+    </select>
+
+    <select id="queryNodesByParentId" resultMap="BaseResultMapOfTree">
+        SELECT configure_id,
+               node_id,
+               node_name,
+               sign,
+               parent_node_id,
+               next_node_id,
+               x,
+               y,
+               process_id,
+               flow_id,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approval_date
+            FROM d_flow_work_node
+            WHERE parent_node_id = #{parentNodeId}
+    </select>
+
+    <insert id="batchInsertNode" parameterType="list">
+        INSERT INTO d_flow_work_node(configure_id, node_id, node_name, sign, parent_node_id, next_node_id, x, y,
+        process_id, flow_id, status, approval_date) VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.configureId}, #{stu.nodeId}, #{stu.nodeName}, #{stu.sign}, #{stu.parentNodeId}, #{stu.nextNodeId},
+            #{stu.x},#{stu.y},#{stu.processId},#{stu.flowId},#{stu.status},#{stu.approvalDate})
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteNode">
+        DELETE FROM d_flow_work_node
+               WHERE process_id = #{processId}
+    </delete>
+
+    <!--******************************************** 审批 *******************************************-->
+    <select id="queryApprove" resultType="bean.Approve">
+        SELECT configure_id configureId,
+               node_id nodeId,
+               user_id userId,
+               user_name userName,
+               process_id processId,
+               business_id businessId,
+               flow_id flowId,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approvalDate,
+               remark
+            FROM d_flow_work_approve
+            WHERE flow_id = #{flowId}
+              AND user_id = #{userId}
+              AND status = 0
+    </select>
+
+    <select id="queryApprovesByNodeid" resultType="bean.Approve">
+        SELECT configure_id configureId,
+               node_id nodeId,
+               user_id userId,
+               user_name userName,
+               process_id processId,
+               flow_id flowId,
+               status,
+               DATE_FORMAT(approval_date, '%Y-%m-%d %H:%i:%s') approvalDate,
+               remark
+            FROM d_flow_work_approve
+            WHERE flow_id = #{flowId}
+    </select>
+
+    <insert id="batchInsertApprove" parameterType="list">
+        INSERT INTO d_flow_work_approve(configure_id, node_id, user_id, user_name, process_id, flow_id, business_id, status,
+        approval_date,remark) VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.configureId}, #{stu.nodeId}, #{stu.userId}, #{stu.userName}, #{stu.processId}, #{stu.flowId},
+            #{stu.businessId}, #{stu.status}, #{stu.approvalDate},#{stu.remark})
+        </foreach>
+    </insert>
+
+    <update id="approveOfProcess">
+        UPDATE d_flow_work
+        SET status        = #{status},
+            approval_date = NOW()
+            WHERE process_id = #{processId}
+    </update>
+
+    <update id="approveOfNode">
+        UPDATE d_flow_work_node
+        SET status        = #{status},
+            approval_date = NOW()
+            WHERE flow_id = #{flowId}
+    </update>
+
+    <update id="approveOfUser">
+        UPDATE d_flow_work_approve
+        <set>
+            `status` = #{status},
+            <if test="status == 1 or status ==2 or status ==3">
+                approval_date = NOW(),
+            </if>
+            <if test="remark != null and remark !=''">
+                remark = #{remark}
+            </if>
+        </set>
+        WHERE flow_id = #{flowId}
+            AND user_id = #{userId}
+    </update>
+
+    <delete id="deleteApprove">
+        DELETE FROM d_flow_work_approve
+        WHERE process_id = #{processId}
+    </delete>
+
+    <select id="upcomingList" resultType="java.util.Map">
+        SELECT a.configure_id configureId,
+               a.configure_type configureType,
+               a.configure_name configureName,
+               b.process_id processId,
+               b.business_id businessId,
+               b.initiator,
+               b.initiator_name initiatorName,
+               DATE_FORMAT(b.initiator_date, '%Y-%m-%d %H:%i:%s') initiatorDate,
+               c.flow_id flowId,
+               c.node_name nodeName,
+               (CASE WHEN d.status = 0 THEN '待办'
+                   WHEN d.status = 1 THEN '同意'
+                   WHEN d.status = 2 THEN '拒绝'
+                   WHEN d.status = 3 THEN '驳回' END) status,
+               DATE_FORMAT(d.approval_date, '%Y-%m-%d %H:%i:%s') approvalDate
+            FROM b_flow_config a
+                 JOIN d_flow_work b ON a.configure_id = b.configure_id
+                 JOIN d_flow_work_node c ON b.process_id = c.process_id
+                 JOIN d_flow_work_approve d ON c.flow_id = d.flow_id
+            WHERE d.user_id = #{userId}
+            <if test="type == 0 ">
+                AND c.status = 0
+                AND d.status = 0
+                ORDER BY initiator_date DESC
+            </if>
+            <if test="type == 1 ">
+                AND c.status IN(1,2,3)
+                AND d.status IN(1,2,3)
+                ORDER BY d.approval_date DESC
+            </if>
+
+    </select>
+
+    <select id="upcomingDetails" resultType="java.util.Map">
+        SELECT a.configure_id configureId,
+               a.configure_type configureType,
+               a.configure_name configureName,
+               b.process_id processId,
+               b.business_id businessId,
+               b.initiator,
+               b.initiator_name initiatorName,
+               DATE_FORMAT(b.initiator_date, '%Y-%m-%d %H:%i:%s') initiatorDate,
+               c.flow_id flowId,
+               c.node_name nodeName,
+               (CASE WHEN d.status = 0 THEN '待办'
+                     WHEN d.status = 1 THEN '同意'
+                     WHEN d.status = 2 THEN '拒绝' END) status,
+               DATE_FORMAT(d.approval_date, '%Y-%m-%d %H:%i:%s') approvalDate
+            FROM b_flow_config a
+                 JOIN d_flow_work b ON a.configure_id = b.configure_id
+                 JOIN d_flow_work_node c ON b.process_id = c.process_id
+                 JOIN d_flow_work_approve d ON c.flow_id = d.flow_id
+            WHERE d.flow_id = #{flowId}
+                AND d.user_id = #{userId}
+    </select>
+
+    <select id="businessDetails" resultType="java.util.Map">
+        SELECT moduid, designlibraryid, modunum, moduname, modushortname, moducode, iscustom, message,
+               classificationid, classificationtreepath, designversionnum, creatperson, creattime, updateperson,
+               updatetime, sfzh, yxbz, qybz, bzbz, sourceid, skqybz, dsbz
+            FROM d_flow_work_approve a
+                     JOIN b_modumessage b ON a.business_id = b.moduid
+            WHERE a.flow_id = #{flowId}
+              AND a.user_id = #{userId}
+    </select>
+
+
+</mapper>
