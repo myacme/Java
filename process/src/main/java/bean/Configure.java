@@ -7,6 +7,15 @@ package bean;
  * @author ljx
  * @since 2021-10-11 10:37:37
  */
+/*
+ CREATE TABLE `b_flow_config` (
+ `configure_id` varchar(32) NOT NULL,
+ `configure_type` varchar(255) DEFAULT NULL,
+ `configure_name` varchar(255) DEFAULT NULL,
+ `valid` int(1) NOT NULL DEFAULT '1' COMMENT '0 无效  1有效',
+ PRIMARY KEY (`configure_id`) USING BTREE
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ */
 public class Configure {
 
     public Configure() {

@@ -11,6 +11,22 @@ import java.util.Date;
  * @version 1.0.0
  * @create 2024/9/29 上午10:21
  */
+
+/*
+CREATE TABLE `d_flow_work_approve` (
+  `configure_id` varchar(32) NOT NULL,
+  `node_id` varchar(32) DEFAULT NULL,
+  `user_id` varchar(32) NOT NULL COMMENT '审批人',
+  `user_name` varchar(255) DEFAULT NULL,
+  `process_id` varchar(32) NOT NULL COMMENT '运行id',
+  `flow_id` varchar(32) NOT NULL,
+  `business_id` varchar(32) NOT NULL COMMENT '业务id',
+  `status` int(1) NOT NULL COMMENT '      状态\r\n    -1 未开始\r\n     0 审批中\r\n     1 已通过\r\n     2 未通过',
+  `approval_date` datetime DEFAULT NULL,
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`flow_id`,`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+*/
 @Component
 public class Approve extends People {
 

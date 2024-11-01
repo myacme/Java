@@ -9,6 +9,20 @@ import java.util.List;
  * @author ljx
  * @since 2021-10-11 10:37:37
  */
+
+/*
+CREATE TABLE `b_flow_node` (
+  `configure_id` varchar(32) NOT NULL,
+  `node_id` varchar(32) NOT NULL,
+  `node_name` varchar(255) DEFAULT NULL,
+  `sign` int(1) DEFAULT NULL COMMENT '     节点标识\r\n     0--开始节点\r\n     1--流转节点\r\n     2--结束节点',
+  `parent_node_id` varchar(32) DEFAULT NULL,
+  `next_node_id` varchar(32) DEFAULT NULL,
+  `x` varchar(255) DEFAULT NULL,
+  `y` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`configure_id`,`node_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+*/
 public class ConfigureNode extends Configure {
 
     public ConfigureNode() {

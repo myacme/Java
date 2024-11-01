@@ -6,6 +6,16 @@ package bean;
  * @version 1.0.0
  * @create 2024/10/8 下午2:44
  */
+
+/*
+CREATE TABLE `b_flow_people` (
+  `configure_id` varchar(32) NOT NULL,
+  `node_id` varchar(32) NOT NULL,
+  `user_id` varchar(32) NOT NULL,
+  `user_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`configure_id`,`node_id`,`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+*/
 public class People {
 
     public People() {

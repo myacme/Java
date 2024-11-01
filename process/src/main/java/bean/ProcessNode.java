@@ -17,6 +17,24 @@ import java.util.Objects;
  * @author ljx
  * @since 2021-09-24 08:56:52
  */
+/*
+CREATE TABLE `d_flow_work_node` (
+  `configure_id` varchar(32) NOT NULL,
+  `node_id` varchar(32) NOT NULL,
+  `node_name` varchar(255) DEFAULT NULL,
+  `sign` int(1) NOT NULL COMMENT '     节点标识\r\n     0--开始节点\r\n     1--流转节点\r\n     2--结束节点',
+  `parent_node_id` varchar(32) DEFAULT NULL,
+  `next_node_id` varchar(32) DEFAULT NULL,
+  `x` varchar(255) DEFAULT NULL,
+  `y` varchar(255) DEFAULT NULL,
+  `process_id` varchar(32) NOT NULL COMMENT '运行id',
+  `flow_id` varchar(32) NOT NULL,
+  `status` int(1) NOT NULL COMMENT '      状态\r\n     0 审批中\r\n     1 已通过\r\n     2 未通过',
+  `approval_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`process_id`,`flow_id`) USING BTREE,
+  KEY `I_configure_id` (`configure_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ */
 @Component
 public class ProcessNode extends ConfigureNode {
 

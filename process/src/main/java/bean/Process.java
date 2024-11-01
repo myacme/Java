@@ -13,6 +13,19 @@ import java.util.Date;
  * @author ljx
  * @since 2021-09-24 08:56:52
  */
+/*
+CREATE TABLE `d_flow_work` (
+  `configure_id` varchar(32) NOT NULL,
+  `process_id` varchar(32) NOT NULL COMMENT '运行id',
+  `business_id` varchar(32) NOT NULL COMMENT '业务id',
+  `initiator` varchar(255) NOT NULL COMMENT '发起人',
+  `initiator_name` varchar(255) NOT NULL COMMENT '发起人name',
+  `initiator_date` datetime NOT NULL COMMENT '发起时间',
+  `status` int(1) DEFAULT NULL COMMENT '      状态\r\n     0 审批中\r\n     1 已通过\r\n     2 未通过',
+  `approval_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`process_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+*/
 @Component
 public class Process extends Configure {
 
