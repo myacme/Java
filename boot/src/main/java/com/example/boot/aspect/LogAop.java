@@ -1,6 +1,6 @@
 package com.example.boot.aspect;
 
-import com.example.boot.annotation.BusLog;
+import com.example.boot.annotation.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 @Component
 @Aspect
-public class BusLogAop implements Ordered {
+public class LogAop implements Ordered {
 
     @Resource
     private HttpServletRequest request;
@@ -45,7 +45,7 @@ public class BusLogAop implements Ordered {
     /**
      * 定义BusLogAop的切入点为标记@BusLog注解的方法
      */
-    @Pointcut(value = "@annotation(com.example.boot.annotation.BusLog)")
+    @Pointcut(value = "@annotation(com.example.boot.annotation.Log)")
     public void pointcut() {
     }
 
@@ -68,8 +68,8 @@ public class BusLogAop implements Ordered {
         }
         //目标方法执行完成后，获取目标类、目标方法上的业务日志注解上的功能名称和功能描述
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
-        BusLog anno1 = target.getClass().getAnnotation(BusLog.class);
-        BusLog anno2 = signature.getMethod().getAnnotation(BusLog.class);
+        Log anno1 = target.getClass().getAnnotation(Log.class);
+        Log anno2 = signature.getMethod().getAnnotation(Log.class);
         String clazzValue = anno1.value();
         String methodValue = anno2.value();
         String resultStr = "";

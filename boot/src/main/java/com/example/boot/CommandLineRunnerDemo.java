@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0.0
  * @create 2022/1/11 11:20
  */
-@Component
+//@Component
 public class CommandLineRunnerDemo implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(CommandLineRunnerDemo.class);
 

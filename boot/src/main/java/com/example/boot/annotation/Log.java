@@ -6,14 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author wuxiaoxiao
- * @version 1.0
- * @date 2023/6/30
+ * @author ljx
+ * @version 1.0.0
+ * @create 2024/11/27 上午10:56
  */
 
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BusLog {
+public @interface Log {
     /**
      * 功能名称
      * @return

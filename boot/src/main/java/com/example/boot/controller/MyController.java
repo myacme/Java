@@ -1,7 +1,7 @@
 package com.example.boot.controller;
 
 
-import com.example.boot.annotation.BusLog;
+import com.example.boot.annotation.Log;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2022/7/6 9:24
  */
 @RestController
-@BusLog("test")
+@Log("test")
 public class MyController {
 
     @GetMapping("/hello")
-    @BusLog("hello")
-    public String helloAop(String name) {
+    @Log("hello")
+    public Object helloAop(String name) {
         try {
+            String json = null;
+            json.length();
             return "hello! " + name;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return e;
         }
     }
 }

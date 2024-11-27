@@ -1,6 +1,7 @@
-package com.example.boot.Interceptor;
+package com.example.boot.config;
 
 
+import com.example.boot.Interceptor.TokenInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
