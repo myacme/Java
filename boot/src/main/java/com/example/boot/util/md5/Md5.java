@@ -1,20 +1,4 @@
-/**
- * Copyright (C), 2015-2020, XXX有限公司
- * <p>
- * FileName: Md5
- * <p>
- * Author:   MyAcme
- * <p>
- * Date:     2020/9/11 9:53
- * <p>
- * Description:
- * <p>
- * History:
- *
- * <author>          <time>          <version>          <desc>
- * <p>
- * 作者姓名           修改时间           版本号              描述
- */
+package com.example.boot.util.md5;
 
 
 import org.springframework.util.DigestUtils;
