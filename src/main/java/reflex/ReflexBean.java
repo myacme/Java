@@ -17,6 +17,11 @@ public class ReflexBean {
 
 	public String pub;
 
+    public ReflexBean bean;
+
+	 public ReflexBean(ReflexBean bean){
+	 	this.bean = bean;
+	 }
 	 public ReflexBean(String s){
 	 	this.string = s;
 	 }
@@ -46,7 +51,15 @@ public class ReflexBean {
 		this.anInt = anInt;
 	}
 
-	@Override
+    public ReflexBean getBean() {
+        return bean;
+    }
+
+    public void setBean(ReflexBean bean) {
+        this.bean = bean;
+    }
+
+    @Override
 	public String toString() {
 		return "ReflexBean{" +
 				"string='" + string + '\'' +

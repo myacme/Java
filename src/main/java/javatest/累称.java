@@ -13,7 +13,7 @@ public class 累称 {
 
 	public static void main(String[] args) {
 		累称 fun = new 累称();
-		System.out.println(fun.func(10));
+		System.out.println(fun.func(9));
 	}
 
 

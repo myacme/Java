@@ -228,6 +228,9 @@ public class DateTest {
         System.out.println(LocalDateTime.now().plusMonths(3).isBefore(formatted));
     }
 
+    /**
+     * 时间差
+     */
     public void timeDifference() {
         LocalTime time1 = LocalTime.of(10, 30);
         LocalTime time2 = LocalTime.of(15, 45);
