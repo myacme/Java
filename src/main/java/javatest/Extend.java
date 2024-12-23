@@ -54,12 +54,18 @@ class Sun extends Extend{
     public static void to(){
         System.out.println(" method ");
     }
+    public static void mathod(Extend extend){
+        System.out.println(" method ");
+    }
+
+
 
     public static void main(String[] args) {
         System.out.println("---开始---");
         to();
-        new Sun();
-        new Extend();
+        Extend extend = new Extend();
+        Sun sun = new Sun();
+        mathod(sun);
         System.out.println("---结束---");
     }
 }
