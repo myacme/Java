@@ -1,6 +1,21 @@
 server:
-  port: 8080
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.2.201:32265/portal_dev?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: dldp_dev
+    password: dldp@2021
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations:
+    - classpath*:mapper/*Mapper.xml
+    - classpath*:mapper/*/*Mapper.xml
+  executor-type: reuse
+
+logging:
+  config: classpath:logback.xml
 
 sftp:
   host: 172.31.1.14

@@ -2,8 +2,11 @@ package com.example.boot.controller;
 
 
 import com.example.boot.annotation.Log;
+import com.example.boot.sevice.MySevice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 〈〉
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Log("test")
 public class MyController {
 
+    @Resource
+    private MySevice sevice;
+
     @GetMapping("/hello")
-    @Log("hello")
+//    @Log("hello")
     public Object helloAop(String name) {
         try {
-            String json = null;
-            json.length();
+            sevice.helloAop(name);
             return "hello! " + name;
         } catch (Exception e) {
             e.printStackTrace();
