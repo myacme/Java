@@ -1,11 +1,11 @@
 package util;
 
-import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.io.ZipOutputStream;
+import net.lingala.zip4j.io.outputstream.ZipOutputStream;
 import net.lingala.zip4j.model.FileHeader;
 import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -89,7 +89,6 @@ public class ZipUtil {
             if (encoding.length > 0) {
                 encodingStr = encoding[0];
             }
-            zipFile.setFileNameCharset(encodingStr);
             zipFile.extractAll(destDir);
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +136,6 @@ public class ZipUtil {
     public static void unzip(File zipFile, String dest, String passwd) {
         try {
             ZipFile zFile = new ZipFile(zipFile);
-            zFile.setFileNameCharset(DEFAULT_ENCODING);
             if (!zFile.isValidZipFile()) {
                 throw new ZipException("压缩文件不合法,可能被损坏.");
             }
@@ -175,7 +173,6 @@ public class ZipUtil {
         File[] extractedFiles = new File[0];
         try {
             ZipFile zFile = new ZipFile(zipFile);
-            zFile.setFileNameCharset(DEFAULT_ENCODING);
             if (!zFile.isValidZipFile()) {
                 throw new ZipException("压缩文件不合法,可能被损坏.");
             }
@@ -195,7 +192,6 @@ public class ZipUtil {
             extractedFileList.toArray(extractedFiles);
         } catch (ZipException e) {
             e.printStackTrace();
-        } finally {
         }
         return extractedFiles;
     }
@@ -217,11 +213,6 @@ public class ZipUtil {
         File[] extractedFiles = new File[0];
         try {
             ZipFile zFile = new ZipFile(zipFile);
-            String encodingStr = DEFAULT_ENCODING;
-            if (encoding.length > 0) {
-                encodingStr = encoding[0];
-            }
-            zFile.setFileNameCharset(encodingStr);
             if (!zFile.isValidZipFile()) {
                 throw new ZipException("压缩文件不合法,可能被损坏.");
             }
@@ -330,15 +321,9 @@ public class ZipUtil {
         File srcFile = new File(src);
         dest = buildDestinationZipFilePath(srcFile, dest);
         ZipParameters parameters = new ZipParameters();
-        parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);           // 压缩方式
-        parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);    // 压缩级别
-        if (!StringUtils.isEmpty(passwd)) {
-            parameters.setEncryptFiles(true);
-            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD); // 加密方式
-            parameters.setPassword(passwd.toCharArray());
-        }
-        try {
-            ZipFile zipFile = new ZipFile(dest);
+        parameters.setEncryptFiles(true);
+        parameters.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
+        try (ZipFile zipFile = new ZipFile(dest, passwd.toCharArray());) {
             if (srcFile.isDirectory()) {
                 // 如果不创建目录的话,将直接把给定目录下的文件压缩到压缩文件,即没有目录结构
                 if (!isCreateDir) {
@@ -360,54 +345,17 @@ public class ZipUtil {
             }
         } catch (ZipException e) {
             e.printStackTrace();
-        } finally {
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return dest;
     }
 
-    /**
-     * 使用给定密码压缩指定文件或文件夹到工程目录
-     *
-     * @param files    要压缩的文件
-     * @param fileName 文件名称
-     * @param passwd   压缩使用的密码
-     * @return 最终的压缩文件存放的绝对路径, 如果为null则说明压缩失败.
-     *
-     * @Author
-     */
-    public static String zipTodir(ArrayList<File> files, String fileName, String passwd) {
-        ZipParameters parameters = new ZipParameters();
-        parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);           // 压缩方式
-        parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);    // 压缩级别
-        if (!StringUtils.isEmpty(passwd)) {
-            parameters.setEncryptFiles(true);
-            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD); // 加密方式
-            parameters.setPassword(passwd.toCharArray());
-        }
-        String path = null;
-        if (getProjectPath() != null) {
-            path = getProjectPath() + "\\" + fileName + ".zip";
-            try {
-                ZipFile zipFile = new ZipFile(path);
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        zipFile.addFolder(file, parameters);
-                    } else {
-                        zipFile.addFile(file, parameters);
-                    }
-                }
-            } catch (ZipException e) {
-                e.printStackTrace();
-            } finally {
-            }
-        }
-        return path;
-    }
 
     /**
      * 使用给定密码压缩指定文件或文件夹并下载.
      *
-     * @param response 要压缩的文件或文件夹路径
+//     * @param response 要压缩的文件或文件夹路径
      * @param files    要压缩的文件或文件夹路径
      * @param password 压缩使用的密码
      * @Author
@@ -421,16 +369,10 @@ public class ZipUtil {
         try {
 //			response.setContentType("application/octet-stream");
 //			response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "utf-8"));
-//			outputStream = new ZipOutputStream(response.getOutputStream());
+//			outputStream = new ZipOutputStream(response.getOutputStream(),password.toCharArray());
             ZipParameters parameters = new ZipParameters();
-            parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
-            parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-            parameters.setEncryptFiles(true);
-            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
-            parameters.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
-            parameters.setPassword(password);
             for (File f : files) {
-                outputStream.putNextEntry(f, parameters);
+                outputStream.putNextEntry( parameters);
                 inputStream = new FileInputStream(f);
                 byte[] readBuff = new byte[4096];
                 int readLen = -1;
@@ -440,7 +382,7 @@ public class ZipUtil {
                 outputStream.closeEntry();
                 inputStream.close();
             }
-            outputStream.finish();
+            outputStream.flush();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
