@@ -20,13 +20,13 @@ import javax.annotation.Resource;
 public class MyController {
 
     @Resource
-    private MySevice sevice;
+    private MySevice mySeviceTransactionImpl;
 
     @GetMapping("/hello")
 //    @Log("hello")
     public Object helloAop(String name) {
         try {
-            sevice.helloAop(name);
+            mySeviceTransactionImpl.helloAop(name);
             return "hello! " + name;
         } catch (Exception e) {
             e.printStackTrace();

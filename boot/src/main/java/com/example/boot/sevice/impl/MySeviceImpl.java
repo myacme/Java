@@ -24,6 +24,6 @@ public class MySeviceImpl implements MySevice {
     @Transactional(rollbackFor = Exception.class)
     public void helloAop(String name) {
         mapper.insertA();
-        mapper.insertA1();
+        mapper.insertA();
     }
 }

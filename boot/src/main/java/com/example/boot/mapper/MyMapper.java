@@ -12,6 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MyMapper {
 
     int insertA();
-    int insertA1();
 
 }

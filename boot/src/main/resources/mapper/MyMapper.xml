@@ -5,7 +5,4 @@
     <insert id="insertA">
         insert into a values (1)
     </insert>
-    <insert id="insertA1">
-        insert into a1 values (1)
-    </insert>
 </mapper>
