@@ -23,7 +23,7 @@ public class MySeviceImpl implements MySevice {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void helloAop(String name) {
-        mapper.insertA();
-        mapper.insertA();
+        mapper.insert(1);
+        mapper.insert(2);
     }
 }

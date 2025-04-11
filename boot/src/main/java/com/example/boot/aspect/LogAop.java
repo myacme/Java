@@ -3,11 +3,9 @@ package com.example.boot.aspect;
 import com.example.boot.annotation.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +19,8 @@ import java.util.Arrays;
  * @version 1.0
  * @date 2023/6/30
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class LogAop implements Ordered {
 
     @Resource

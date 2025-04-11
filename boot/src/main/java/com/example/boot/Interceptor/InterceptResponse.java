@@ -8,7 +8,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * @author liujixiang
  */
-@ControllerAdvice
+//@ControllerAdvice
 public class InterceptResponse implements ResponseBodyAdvice<Object> {
 
 	@Override

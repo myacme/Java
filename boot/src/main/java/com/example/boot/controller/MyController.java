@@ -3,6 +3,7 @@ package com.example.boot.controller;
 
 import com.example.boot.annotation.Log;
 import com.example.boot.sevice.MySevice;
+import com.example.boot.sevice.TransactionSevice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,17 +21,31 @@ import javax.annotation.Resource;
 public class MyController {
 
     @Resource
-    private MySevice mySeviceTransactionImpl;
+    private MySevice mySevice;
+
+    @Resource(name = "multiThreadTransaction")
+    private TransactionSevice transactionSevice;
 
     @GetMapping("/hello")
 //    @Log("hello")
-    public Object helloAop(String name) {
+    public String helloAop(String name) {
         try {
-            mySeviceTransactionImpl.helloAop(name);
+            mySevice.helloAop(name);
             return "hello! " + name;
         } catch (Exception e) {
             e.printStackTrace();
-            return e;
+            return e.getMessage();
+        }
+    }
+
+    @GetMapping("/test")
+    public String testTransaction() {
+        try {
+            transactionSevice.testTransaction();
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
         }
     }
 }
