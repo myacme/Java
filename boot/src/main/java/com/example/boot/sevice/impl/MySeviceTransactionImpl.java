@@ -23,6 +23,7 @@ public class MySeviceTransactionImpl implements MySevice {
     @Transactional 默认捕获runtimeException
 
     声明式事务（@Transactional）：DataSourceTransactionManager  doBegin 获取dataSource 放入ThreadLocal里
+
     事务：
     1、A方法有@Transactional注解，B方法有，没有@Transactional注解，A调用B方法，都会事务成功
     2、A方法没有@Transactional注解，B方法有@Transactional注解，A调用B方法，事务失效
