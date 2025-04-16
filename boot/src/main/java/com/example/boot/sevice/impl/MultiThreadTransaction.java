@@ -55,6 +55,7 @@ public class MultiThreadTransaction implements TransactionSevice {
             };
             futures.add(executor.submit(task));
         }
+
         // 检查结果
         boolean allSuccess = futures.stream().allMatch(future -> {
             try {
