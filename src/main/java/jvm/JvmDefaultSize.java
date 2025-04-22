@@ -1,4 +1,4 @@
-package javatest;
+package jvm;
 
 
 import java.lang.management.ManagementFactory;

@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -44,6 +45,20 @@ public class StreamDemo {
         //ConfigId为key
         Map<Object, ResultFileDO> favorite = list.stream()
                 .collect(Collectors.toMap(ResultFileDO::getConfigId, Function.identity()));
+    }
+
+    /**
+     * 分割集合
+     */
+    public static void test3() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+        int splitCount = 3;
+        int size = list.size();
+        List<List<Integer>> collect = IntStream.range(0, splitCount)
+                .mapToObj(i -> list.subList(
+                        i * size / splitCount,
+                        (i + 1) * size / splitCount))
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
