@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -18,8 +19,8 @@ import java.util.Date;
  * 作用: 表示当前类是切面类
  * @create 2023/2/15 10:44
  */
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class MyAspect {
 
     /**
