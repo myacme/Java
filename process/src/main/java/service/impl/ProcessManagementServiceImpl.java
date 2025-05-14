@@ -1,8 +1,8 @@
 package service.impl;
 
 
-import bean.*;
 import bean.Process;
+import bean.*;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
 import mapper.ProcessConfigureMapper;
@@ -29,6 +29,8 @@ import java.util.UUID;
  */
 @Service
 public class ProcessManagementServiceImpl implements ProcessManagementService {
+    public static final String USERNAME = "username";
+    public static final String DISPLAY_NAME = "display_name";
     @Resource
     private ProcessManagementMapper managementMapper;
     @Resource
@@ -55,10 +57,8 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
         if (configure == null || CollectionUtils.isEmpty(configureNodes)) {
             return 0;
         }
-        String userId = "username";
-        String userName = "display_name";
         String processId = UUID.randomUUID().toString();
-        Process process = new bean.Process(configure, processId, userId, userName, businessId);
+        Process process = new bean.Process(configure, processId, USERNAME, DISPLAY_NAME, businessId);
         // 新增流程
         managementMapper.addProcess(process);
         // 新增节点
@@ -71,7 +71,7 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
             ProcessNode processNode = new ProcessNode(configureNode, processId, flowId);
             //发起人节点
             if (configureNode.getSign() == 0) {
-                initiator = new Approve(configureId, configureNode.getNodeId(), userId, userName, processId, flowId, businessId);
+                initiator = new Approve(configureId, configureNode.getNodeId(), USERNAME, DISPLAY_NAME, processId, flowId, businessId);
                 approves.add(initiator);
             }
             //其他节点
@@ -110,7 +110,7 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
             return 0;
         }
         String flowId = param.getFlowId();
-        String userId = "username";
+        String userId = USERNAME;
         Approve approve = managementMapper.queryApprove(flowId, userId);
         // 同意
         if (status == 1) {
@@ -135,7 +135,7 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
     @Override
     public PageInfo<Map<String, Object>> upcomingList(int type, int pageNumber, int pageSize) {
         PageMethod.startPage(pageNumber, pageSize);
-        String userId = "username";
+        String userId = USERNAME;
         return new PageInfo<>(managementMapper.upcomingList(userId, type));
     }
 
@@ -147,7 +147,7 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
      */
     @Override
     public Map<String, Object> getUpcoming(String flowId) {
-        String userId = "username";
+        String userId = USERNAME;
         Map<String, Object> map = managementMapper.upcomingDetails(flowId, userId);
         map.put("business", managementMapper.businessDetails(flowId, userId));
         return map;
@@ -167,7 +167,7 @@ public class ProcessManagementServiceImpl implements ProcessManagementService {
      */
     @Override
     public PageInfo<Map<String, Object>> listInitiate(int pageNumber, int pageSize) {
-        String userId = "username";
+        String userId = USERNAME;
         PageMethod.startPage(pageNumber, pageSize);
         return new PageInfo<>(managementMapper.queryByUser(userId));
     }
