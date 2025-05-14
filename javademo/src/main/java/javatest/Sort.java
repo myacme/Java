@@ -17,7 +17,8 @@ package javatest; /**
  */
 
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * 〈排序

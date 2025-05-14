@@ -10,6 +10,7 @@
         <module>nio</module>
         <module>note</module>
         <module>process</module>
+        <module>javademo</module>
     </modules>
 
     <parent>

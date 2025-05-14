@@ -2,7 +2,8 @@ package game.象棋;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ChessGame extends JFrame {
     // 棋盘大小

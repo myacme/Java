@@ -1,4 +1,4 @@
-//package javatest;
+package javatest;//package javatest;
 //
 //
 //import com.jcraft.jsch.*;
