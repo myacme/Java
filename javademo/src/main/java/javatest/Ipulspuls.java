@@ -8,18 +8,26 @@ package javatest;
 public class Ipulspuls {
 
 
-    public void add() {
+    public static void add() {
         int i = 1;
         i++;
         int j = 1;
         ++j;
+        System.out.println(j);
+        System.out.println(i);
+    }
+
+    public static void add1() {
+        int i = 1;
+        i = i++;
+        int j = 1;
+        j = ++j;
+        System.out.println(j);
+        System.out.println(i);
     }
 
     public static void main(String[] args) {
-        int i = 1;
-        int j = i++;
-        System.out.println(j);
-        System.out.println(i);
-        i++;
+        add();
+        add1();
     }
 }
