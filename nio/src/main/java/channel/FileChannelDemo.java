@@ -7,6 +7,10 @@ import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author ljx
@@ -45,6 +49,16 @@ public class FileChannelDemo {
         }
         channel.close();
         rafile.close();
+    }
+
+    /**
+     * 文件复制Files.copy
+     * @throws IOException
+     */
+    public void FilesCopy() throws IOException {
+        Path source = Paths.get("r0.txt");
+        Path target = Paths.get("w0.txt");
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
