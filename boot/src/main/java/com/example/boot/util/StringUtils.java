@@ -16,6 +16,10 @@ public class StringUtils {
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###################.###########");
 
     private StringUtils() {
+        // 防止通过反射创建实例
+        if (StringUtils.class != StackWalker.getInstance().getCallerClass()) {
+            throw new UnsupportedOperationException("StringUtils 是工具类，不能实例化");
+        }
     }
 
     /**
