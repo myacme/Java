@@ -17,9 +17,7 @@ public class StringUtils {
 
     private StringUtils() {
         // 防止通过反射创建实例
-        if (StringUtils.class != StackWalker.getInstance().getCallerClass()) {
-            throw new UnsupportedOperationException("StringUtils 是工具类，不能实例化");
-        }
+        throw new UnsupportedOperationException("StringUtils 是工具类，不能实例化");
     }
 
     /**
