@@ -67,6 +67,20 @@
             <version>3.17</version>
         </dependency>
 
+        <!-- 快速导入excel -->
+        <dependency>
+            <groupId>cn.idev.excel</groupId>
+            <artifactId>fastexcel</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!--引入本地lib下的jar包-->
         <!--        <dependency>-->
         <!--            <groupId>gdal</groupId>-->
