@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 /**
  * @author ljx
@@ -49,6 +51,27 @@ public class MybatisUtil {
 	public static String precompile(String sql) {
 		return "'" + sql + "'";
 	}
+
+    /**
+     * 分批并行处理列表数据
+     *
+     *batchProcess(resourceEntityList, 300, resourceService::insertBatch);
+     *
+     * @param list      待处理列表
+     * @param batchSize 批次大小
+     * @param consumer  处理函数
+     * @param <T>       数据类型
+     */
+    public <T> void batchProcess(List<T> list, int batchSize, Consumer<List<T>> consumer) {
+        IntStream.range(0, (list.size() + batchSize - 1) / batchSize)
+                .parallel()
+                .forEach(i -> {
+                    int start = i * batchSize;
+                    int end = Math.min((i + 1) * batchSize, list.size());
+                    List<T> batch = list.subList(start, end);
+                    consumer.accept(batch);
+                });
+    }
 
 	public static void main(String[] args) {
 		Map<String, Object> params = new HashMap<>(4);
