@@ -5,8 +5,10 @@ package note;
  * @create 2025/8/12 上午9:41
  */
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 
 // 其他常用日期操作
 public class DateUtils {
@@ -65,6 +67,28 @@ public class DateUtils {
      */
     public static LocalDate getLastDayOfMonth() {
         return LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+    }
+
+    /**
+     * 获取本周第一天的日期字符串
+     *
+     * @return String 获取本周第一天的日期字符串（格式：yyyy-MM-dd）
+     */
+    public static String getLastWeekEndDateStr() {
+        LocalDate thisWeekFirstDate = LocalDate.now()
+                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        return thisWeekFirstDate.toString();
+    }
+
+    /**
+     * 获取本月第一天的日期字符串
+     *
+     * @return String 获取本月第一天的日期字符串（格式：yyyy-MM-dd）
+     */
+    public static String getLastMonthEndDateStr() {
+        LocalDate thisMonthFirstDate = LocalDate.now()
+                .with(TemporalAdjusters.firstDayOfMonth());
+        return thisMonthFirstDate.toString();
     }
 }
 
