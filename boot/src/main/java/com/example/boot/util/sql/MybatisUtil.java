@@ -1,4 +1,4 @@
-package com.example.boot.util;
+package com.example.boot.util.sql;
 
 
 import java.util.ArrayList;

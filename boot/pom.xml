@@ -81,6 +81,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>4.9</version>
+        </dependency>
+
         <!--引入本地lib下的jar包-->
         <!--        <dependency>-->
         <!--            <groupId>gdal</groupId>-->

@@ -4,7 +4,7 @@ package com.example.boot.Interceptor;
 import com.example.boot.util.IpUtil;
 import com.example.boot.util.JacksonUtil;
 import com.example.boot.util.JwtTokenUtil;
-import com.example.boot.util.LogonUserUtil;
+import com.example.boot.util.LoginUserUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 				log.info("token解析错误");
 				return false;
 			}
-			if (LogonUserUtil.verifyLogonUser(IpUtil.getIpAddr(request), JwtTokenUtil.getSubject(token))) {
+			if (LoginUserUtil.verifyLoginUser(IpUtil.getIpAddr(request), JwtTokenUtil.getSubject(token))) {
 				response.getWriter().println(JacksonUtil.getJsonString("未登录，请先登录"));
 				log.info("未登录，请先登录");
 				return false;

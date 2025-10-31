@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2022/8/31 17:40
  */
 
-public class LogonUserUtil {
+public class LoginUserUtil {
 
-	public static String getLogonUsername() {
+	public static String getLoginUsername() {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 		if (requestAttributes != null) {
 			HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
@@ -26,7 +26,7 @@ public class LogonUserUtil {
 		return null;
 	}
 
-	public static boolean verifyLogonUser(String ip, String username) {
+	public static boolean verifyLoginUser(String ip, String username) {
 		return !ip.equals(LoginUser.LOGON_USER_MAP.get(username));
 	}
 }
