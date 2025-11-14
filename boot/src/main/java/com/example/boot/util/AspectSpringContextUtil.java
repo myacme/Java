@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @create 2022/8/31 17:15
  */
 @Component
-public class SpringContextUtil implements ApplicationContextAware {
+public class AspectSpringContextUtil implements ApplicationContextAware {
 
 
 	private static ApplicationContext applicationContext;
@@ -24,7 +24,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 	@Override
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
 		System.out.println("初始化了");
-		SpringContextUtil.applicationContext = arg0;
+		AspectSpringContextUtil.applicationContext = arg0;
 	}
 
 	public static ApplicationContext getApplicationContext() {

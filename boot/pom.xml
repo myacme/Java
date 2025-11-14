@@ -87,6 +87,25 @@
             <version>4.9</version>
         </dependency>
 
+        <!-- SpringDoc OpenAPI 核心依赖（含 Swagger UI） -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+        <!-- Spring Security（用于 Swagger 页面认证，可选但推荐） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!--引入本地lib下的jar包-->
         <!--        <dependency>-->
         <!--            <groupId>gdal</groupId>-->
