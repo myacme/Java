@@ -40,10 +40,26 @@ springdoc:
     operations-sorter: alpha # 同标签下接口排序：alpha=路径字母序，method=HTTP方法序（GET→POST）
   # API 文档数据接口（Swagger UI 数据源，返回 JSON）
   api-docs:
+    enable: true
     path: /v3/api-docs  # 文档数据路径（如：http://ip:port/上下文/v3/api-docs）
   # 接口分组配置（按包/路径筛选接口，避免无关接口混入文档）
   group-configs:
     - group: default          # 分组名称（Swagger UI 顶部可切换，默认一个分组）
       paths-to-match: /**     # 匹配所有路径的接口（可缩小范围，如：/personInfo/**）
       packages-to-scan: com.example.boot.controller # 扫描的控制器包（只解析该包下的接口）
+
+
+
+# Knife4j 配置
+
+knife4j:
+  enable: true
+  setting:
+    # 显示接口统计信息
+    showRequestParams: true
+    showResponseParams: true
+    # 分组配置
+    group-config:
+      - name: 默认分组
+        paths: /.*$
 

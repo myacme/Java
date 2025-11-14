@@ -87,11 +87,11 @@
             <version>4.9</version>
         </dependency>
 
-        <!-- SpringDoc OpenAPI 核心依赖（含 Swagger UI） -->
+        <!-- 如果使用 Knife4j，确保版本兼容  包含openapi3 的依赖  -->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.8.0</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <!-- Spring Security（用于 Swagger 页面认证，可选但推荐） -->

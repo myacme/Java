@@ -20,9 +20,14 @@ public class BootApplication {
         ConfigurableApplicationContext context = SpringApplication.run(BootApplication.class, args);
         AspectSpringContextUtil.getBean("loginUser");
         Environment environment = context.getBean(Environment.class);
+        String port = environment.getProperty("server.port");
+        String contextPath = environment.getProperty("server.servlet.context-path");
+        log.info("Knife4j地址：http://127.0.0.1:{}{}/doc.html",
+                port,
+                contextPath);
         log.info("指标服务访问路径为：http://127.0.0.1:{}{}/swagger-ui.html",
-                environment.getProperty("server.port"),
-                environment.getProperty("server.servlet.context-path"));
+                port,
+                contextPath);
 
 	}
 

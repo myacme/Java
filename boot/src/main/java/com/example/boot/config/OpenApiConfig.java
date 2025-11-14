@@ -34,7 +34,7 @@ public class OpenApiConfig {
                 // 1. 文档基础信息（显示在 Swagger UI 顶部）
                 .info(new Info()
                         // 文档标题
-                        .title("API文档")
+                        .title("接口文档")
                         // 文档版本
                         .version("1.0")
                         // 文档描述（可写接口规范、注意事项）
