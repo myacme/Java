@@ -1,10 +1,10 @@
 package com.example.boot.sevice.impl;
 
 
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.example.boot.mapper.MyMapper;
 import com.example.boot.sevice.MySevice;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -21,7 +21,7 @@ public class MySeviceImpl implements MySevice {
     private MyMapper mapper;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional  // ds的事务注解
     public void helloAop(String name) {
         mapper.insert(1);
         mapper.insert(2);

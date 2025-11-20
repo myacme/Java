@@ -11,6 +11,25 @@ spring:
     username: dldp_dev
     password: dldp@2021
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    # 多数据源
+#    dynamic:
+#      primary: master # 设置默认数据源
+#      datasource:
+#        master:
+#          url: jdbc:mysql://localhost:3306/master_db
+#          username: root
+#          password: 123456
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#        slave1:
+#          url: jdbc:mysql://localhost:3306/slave1_db
+#          username: root
+#          password: 123456
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#        slave2:
+#          url: jdbc:postgresql://localhost:5432/slave2_db
+#          username: postgres
+#          password: 123456
+#          driver-class-name: org.postgresql.Driver
 
 mybatis:
   config-location: classpath:mybatis-config.xml
