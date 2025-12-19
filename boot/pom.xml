@@ -112,6 +112,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!--引入本地lib下的jar包-->
         <!--        <dependency>-->
         <!--            <groupId>gdal</groupId>-->

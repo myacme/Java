@@ -25,7 +25,7 @@ public class BootApplication {
         log.info("Knife4j地址：http://127.0.0.1:{}{}/doc.html",
                 port,
                 contextPath);
-        log.info("指标服务访问路径为：http://127.0.0.1:{}{}/swagger-ui.html",
+        log.info("Swagger访问路径为：http://127.0.0.1:{}{}/swagger-ui.html",
                 port,
                 contextPath);
 

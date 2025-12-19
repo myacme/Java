@@ -1,6 +1,7 @@
 package com.example.boot.util;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0.0
  * @create 2022/8/31 17:15
  */
+@Slf4j
 @Component
 public class AspectSpringContextUtil implements ApplicationContextAware {
 
@@ -23,7 +25,7 @@ public class AspectSpringContextUtil implements ApplicationContextAware {
 	 */
 	@Override
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
-		System.out.println("初始化了");
+		log.info("注入ApplicationContext实例");
 		AspectSpringContextUtil.applicationContext = arg0;
 	}
 
