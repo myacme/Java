@@ -92,6 +92,63 @@
             <version>0.17</version>
         </dependency>
 
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--引入本地lib下的jar包-->
+        <!--        <dependency>-->
+        <!--            <groupId>gdal</groupId>-->
+        <!--            <artifactId>gdal</artifactId>-->
+        <!--            <version>1.0.0</version>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/src/main/resources/lib/gdal.jar</systemPath>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>aes</groupId>-->
+        <!--            <artifactId>aes</artifactId>-->
+        <!--            <version>1.0.0</version>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/src/main/resources/lib/aes.jar</systemPath>-->
+        <!--        </dependency>-->
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 解决 本地引入jar包，打不到jar中去-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--                <configuration>-->
+            <!--                    <includeSystemScope>true</includeSystemScope>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+        </plugins>
+        <!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>${project.basedir}</directory>-->
+        <!--                <includes>-->
+        <!--                    <include>**/*</include>-->
+        <!--                </includes>-->
+        <!--            </resource>-->
+        <!--        </resources>-->
+    </build>
 
 </project>
